@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home_menu"
+        android:title="Home"/>
+    <item android:id="@+id/allproducts_menu"
+        android:title="ALL PRODUCTS"/>
+    <item android:id="@+id/desktop_menu"
+        android:title="DESKTOP"/>
+    <item android:id="@+id/laptop_menu"
+        android:title="LAPTOP"/>
+
+</menu>
