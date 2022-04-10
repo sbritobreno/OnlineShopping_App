@@ -32,8 +32,22 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             createBuild.show()
         }
 
+        //Home BTN
+        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
+        homeBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Cart BTN
+        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
+        cartBtn.setOnClickListener{
+            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
+            //val intent = Intent(this, CartActivity::class.java)
+            //startActivity(intent)
+        }
+
         product_name_product_details_act.text = getIntent().getStringExtra("ProductName_mainA")
-        getIntent().getStringExtra("ProductImg_mainA")?.let { product_img_product_details_act.setImageResource(it.toInt()) }
         product_price_product_details_act.text = getIntent().getStringExtra("ProductPrice_mainA")
         product_description_product_details_act.text = getIntent().getStringExtra("ProductDescription_mainA")
     }
@@ -55,36 +69,13 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             //Categories Menu
-            (R.id.home_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                return true
-            }
             (R.id.allproducts_menu) -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("Category", "allproducts_cat")
                 startActivity(intent)
                 return true
             }
-            (R.id.desktop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "desktop_cat")
-                startActivity(intent)
-                return true
-            }
-            (R.id.laptop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "laptop_cat")
-                startActivity(intent)
-                return true
-            }
             //No User Menu
-            (R.id.sign_in_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
-                intent.putExtra("Sign In", true)
-                startActivity(intent)
-                return true
-            }
             (R.id.log_in_menu) -> {
                 val intent = Intent(this, LogInPageActivity::class.java)
                 startActivity(intent)
@@ -98,6 +89,8 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
             (R.id.user_cart_menu) -> {
                 Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
+                //val intent = Intent(this, CartActivity::class.java)
+                //startActivity(intent)
                 return true
             }
             else -> return false

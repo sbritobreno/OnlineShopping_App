@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text">#202124</color>
     <color name="red">#FF0000</color>
+    <color name="yellow_200">#ffc629</color>
+    <color name="yellow_500">#ddc629</color>
 </resources>

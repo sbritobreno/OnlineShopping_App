@@ -61,12 +61,26 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
             val createBuild = eBuilder.create()
             createBuild.show()
         }
+
+        //Home BTN
+        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
+        homeBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Cart BTN
+        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
+        cartBtn.setOnClickListener{
+            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
+            //val intent = Intent(this, CartActivity::class.java)
+            //startActivity(intent)
+        }
     }
 
     override fun onItemClick(item: Models, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra("ProductName_mainA", item.title)
-        intent.putExtra("ProductImg_mainA", item.image.toString())
         intent.putExtra("ProductPrice_mainA", item.price)
         intent.putExtra("ProductDescription_mainA", item.description)
         startActivity(intent)
@@ -89,36 +103,13 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             //Categories Menu
-            (R.id.home_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                return true
-            }
             (R.id.allproducts_menu) -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("Category", "allproducts_cat")
                 startActivity(intent)
                 return true
             }
-            (R.id.desktop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "desktop_cat")
-                startActivity(intent)
-                return true
-            }
-            (R.id.laptop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "laptop_cat")
-                startActivity(intent)
-                return true
-            }
             //No User Menu
-            (R.id.sign_in_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
-                intent.putExtra("Sign In", true)
-                startActivity(intent)
-                return true
-            }
             (R.id.log_in_menu) -> {
                 val intent = Intent(this, LogInPageActivity::class.java)
                 startActivity(intent)

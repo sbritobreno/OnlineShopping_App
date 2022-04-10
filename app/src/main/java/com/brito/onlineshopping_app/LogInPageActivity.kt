@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_log_in_page.*
 
@@ -33,23 +30,45 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
             createBuild.show()
         }
 
-        val signInBtn = findViewById<Button>(R.id.sign_in_btn)
-        signInBtn.setOnClickListener {
-            onSignInBtnClick()
+        //Home BTN
+        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
+        homeBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
-        var signIn = getIntent().getBooleanExtra("Sign In", false)
+        //Cart BTN
+        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
+        cartBtn.setOnClickListener{
+            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
+            //val intent = Intent(this, CartActivity::class.java)
+            //startActivity(intent)
+        }
 
-        if(signIn)
-            onSignInBtnClick()
-
+        // Change option Login and Sign in
+        val optionEnterBtn = findViewById<TextView>(R.id.change_option_signIn_login_btn)
+        optionEnterBtn.setOnClickListener {
+            if(change_option_signIn_login_btn.text == "Already have an account? Login now")
+                onLogintextBtnClick()
+            else
+                onSignInTextBtnClick()
+        }
     }
 
-    fun onSignInBtnClick(){
+    fun onSignInTextBtnClick(){
+        change_option_signIn_login_btn.text = "Already have an account? Login now"
         email_login_act.visibility = View.VISIBLE
         firstname_login_act.visibility = View.VISIBLE
         lastname_login_act.visibility = View.VISIBLE
-        login_btn.visibility = View.GONE
+        login_signIn_btn.text = "Sign in"
+    }
+
+    fun onLogintextBtnClick(){
+        change_option_signIn_login_btn.text = "Don't you have an account? Create now"
+        email_login_act.visibility = View.GONE
+        firstname_login_act.visibility = View.GONE
+        lastname_login_act.visibility = View.GONE
+        login_signIn_btn.text = "Login"
     }
 
     fun showCategoriesDropDownMenu(v: View){
@@ -69,38 +88,16 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             //Categories Menu
-            (R.id.home_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                return true
-            }
             (R.id.allproducts_menu) -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("Category", "allproducts_cat")
                 startActivity(intent)
                 return true
             }
-            (R.id.desktop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "desktop_cat")
-                startActivity(intent)
-                return true
-            }
-            (R.id.laptop_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "laptop_cat")
-                startActivity(intent)
-                return true
-            }
             //No User Menu
-            (R.id.sign_in_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
-                intent.putExtra("Sign In", true)
-                startActivity(intent)
-                return true
-            }
             (R.id.log_in_menu) -> {
                 val intent = Intent(this, LogInPageActivity::class.java)
+                intent.putExtra("Login In", true)
                 startActivity(intent)
                 return true
             }
