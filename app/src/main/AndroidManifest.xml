@@ -12,13 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShopping_App">
         <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".LogInPageActivity"
             android:exported="false" />
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

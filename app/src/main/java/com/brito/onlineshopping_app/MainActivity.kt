@@ -6,32 +6,79 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_log_in_page.*
+import com.google.gson.GsonBuilder
+import com.google.gson.internal.GsonBuildConfig
+import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.OkHttpClient
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import java.io.IOException
 
-
+interface ApiProductsService {
+    @GET("/products")
+    fun getPosts(): Call<ArrayList<Models>>
+}
 class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener{
+//    fun fetchJson(){
+//        val url = "https://fakestoreapi.com/products"
+//        val request = Request.Builder().url(url).build()
+//
+//        val client = OkHttpClient()
+//        client.newCall(request).enqueue(object: Callback {
+//            override fun onFailure(call: Call, e: IOException) {
+//                Log.e("error", e.message.toString())
+//            }
+//
+//            override fun onResponse(call: Call?, response: Response?){
+//                val body = response?.body()?.string()
+//                println(body)
+//
+//                val gson = GsonBuilder().create()
+//                val pro = gson.fromJson(body, Models::class.java)
+//                runOnUiThread{
+//                    product_recyclerview.adapter = PostAdapter(ArrayList<Models>(), this@MainActivity)
+//                }
+//            }
+//        })
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
 
-        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
+        //fetchJson()
+
+        val client = OkHttpClient.Builder().build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://fakestoreapi.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+        fun <T> buildService(service: Class<T>): T {
+            return retrofit.create(service)
+        }
+
+        val serviceGenerator = buildService(ApiProductsService::class.java)
         val call = serviceGenerator.getPosts()
 
         call.enqueue(object : Callback<ArrayList<Models>> {
             override fun onResponse(
                 call: retrofit2.Call<ArrayList<Models>>,
-                response: Response<ArrayList<Models>>) {
+                response: Response<ArrayList<Models>>
+            ) {
                 if(response.isSuccessful)
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(this@MainActivity)
@@ -72,9 +119,8 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
         cartBtn.setOnClickListener{
-            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
-            //val intent = Intent(this, CartActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -83,6 +129,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
         intent.putExtra("ProductName_mainA", item.title)
         intent.putExtra("ProductPrice_mainA", item.price)
         intent.putExtra("ProductDescription_mainA", item.description)
+        intent.putExtra("ProductImage_mainA", item.image)
         startActivity(intent)
     }
 
@@ -128,5 +175,4 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
             else -> return false
         }
     }
-
 }
