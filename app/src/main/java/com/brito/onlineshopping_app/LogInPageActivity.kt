@@ -46,9 +46,9 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
         }
 
         // Change option Login and Sign in
-        val optionEnterBtn = findViewById<TextView>(R.id.change_option_signIn_login_btn)
+        val optionEnterBtn = findViewById<TextView>(R.id.change_option_createAccount_login_btn)
         optionEnterBtn.setOnClickListener {
-            if(change_option_signIn_login_btn.text == "Already have an account? Login now")
+            if(change_option_createAccount_login_btn.text == "Already have an account? Login now")
                 onLogintextBtnClick()
             else
                 onSignInTextBtnClick()
@@ -56,19 +56,19 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
     }
 
     fun onSignInTextBtnClick(){
-        change_option_signIn_login_btn.text = "Already have an account? Login now"
+        change_option_createAccount_login_btn.text = "Already have an account? Login now"
         email_login_act.visibility = View.VISIBLE
         firstname_login_act.visibility = View.VISIBLE
         lastname_login_act.visibility = View.VISIBLE
-        login_signIn_btn.text = "Sign in"
+        login_createAccount_btn.text = "Create Account"
     }
 
     fun onLogintextBtnClick(){
-        change_option_signIn_login_btn.text = "Don't you have an account? Create now"
+        change_option_createAccount_login_btn.text = "Don't you have an account? Create now"
         email_login_act.visibility = View.GONE
         firstname_login_act.visibility = View.GONE
         lastname_login_act.visibility = View.GONE
-        login_signIn_btn.text = "Login"
+        login_createAccount_btn.text = "Login"
     }
 
     fun showCategoriesDropDownMenu(v: View){

@@ -3,18 +3,59 @@ package com.brito.onlineshopping_app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_details.*
+import kotlinx.android.synthetic.main.product_recycler_template.view.*
+import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
+
+        var productId = getIntent().getIntExtra("ProductId_mainA", 0)
+
+        var path = "products"
+        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
+        val call = serviceGenerator.getPosts(path)
+
+        call.enqueue(object : Callback<ArrayList<Models>> {
+            override fun onResponse(
+                call: Call<ArrayList<Models>>,
+                response: Response<ArrayList<Models>>
+            ) {
+                if(response.isSuccessful) {
+                    product_name_product_details_act.text = response.body()!!.get(productId).title
+                    product_price_product_details_act.text = response.body()!!.get(productId).price
+                    product_description_product_details_act.text = response.body()!!.get(productId).description
+                    val loadImageView = product_img_product_details_act.image
+//                    Picasso.get()
+//                        .load(response.body()?.get(productId)?.image)
+//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .into(loadImageView)
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Models>>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+
+        })
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -42,14 +83,9 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
         cartBtn.setOnClickListener{
-            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
-            //val intent = Intent(this, CartActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
         }
-
-        product_name_product_details_act.text = getIntent().getStringExtra("ProductName_mainA")
-        product_price_product_details_act.text = getIntent().getStringExtra("ProductPrice_mainA")
-        product_description_product_details_act.text = getIntent().getStringExtra("ProductDescription_mainA")
     }
 
     fun showCategoriesDropDownMenu(v: View){
@@ -88,9 +124,8 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                 return true
             }
             (R.id.user_cart_menu) -> {
-                Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
-                //val intent = Intent(this, CartActivity::class.java)
-                //startActivity(intent)
+                val intent = Intent(this, CartActivity::class.java)
+                startActivity(intent)
                 return true
             }
             else -> return false

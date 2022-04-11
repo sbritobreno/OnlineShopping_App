@@ -22,35 +22,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.io.IOException
 
-interface ApiProductsService {
-    @GET("/products")
-    fun getPosts(): Call<ArrayList<Models>>
-}
 class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener{
-//    fun fetchJson(){
-//        val url = "https://fakestoreapi.com/products"
-//        val request = Request.Builder().url(url).build()
-//
-//        val client = OkHttpClient()
-//        client.newCall(request).enqueue(object: Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                Log.e("error", e.message.toString())
-//            }
-//
-//            override fun onResponse(call: Call?, response: Response?){
-//                val body = response?.body()?.string()
-//                println(body)
-//
-//                val gson = GsonBuilder().create()
-//                val pro = gson.fromJson(body, Models::class.java)
-//                runOnUiThread{
-//                    product_recyclerview.adapter = PostAdapter(ArrayList<Models>(), this@MainActivity)
-//                }
-//            }
-//        })
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,25 +33,13 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
         val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
 
-        //fetchJson()
-
-        val client = OkHttpClient.Builder().build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://fakestoreapi.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-
-        fun <T> buildService(service: Class<T>): T {
-            return retrofit.create(service)
-        }
-
-        val serviceGenerator = buildService(ApiProductsService::class.java)
-        val call = serviceGenerator.getPosts()
+        var path = "products"
+        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
+        val call = serviceGenerator.getPosts(path)
 
         call.enqueue(object : Callback<ArrayList<Models>> {
             override fun onResponse(
-                call: retrofit2.Call<ArrayList<Models>>,
+                call: Call<ArrayList<Models>>,
                 response: Response<ArrayList<Models>>
             ) {
                 if(response.isSuccessful)
@@ -85,8 +48,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
                         adapter = PostAdapter(response.body()!!, this@MainActivity)
                     }
             }
-
-            override fun onFailure(call: retrofit2.Call<ArrayList<Models>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<Models>>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
             }
@@ -126,10 +88,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
     override fun onItemClick(item: Models, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductName_mainA", item.title)
-        intent.putExtra("ProductPrice_mainA", item.price)
-        intent.putExtra("ProductDescription_mainA", item.description)
-        intent.putExtra("ProductImage_mainA", item.image)
+          intent.putExtra("ProductId_mainA", item.id)
         startActivity(intent)
     }
 

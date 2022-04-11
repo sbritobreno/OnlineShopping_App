@@ -136,7 +136,7 @@
             android:padding="10dp"/>
 
         <Button
-            android:id="@+id/login_signIn_btn"
+            android:id="@+id/login_createAccount_btn"
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -150,7 +150,7 @@
             app:strokeWidth="1dp"/>
 
         <TextView
-            android:id="@+id/change_option_signIn_login_btn"
+            android:id="@+id/change_option_createAccount_login_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
