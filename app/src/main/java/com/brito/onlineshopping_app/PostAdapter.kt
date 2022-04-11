@@ -1,11 +1,17 @@
 package com.brito.onlineshopping_app
 
+import android.icu.number.NumberFormatter.with
+import android.icu.number.NumberRangeFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.product_recycler_template.view.*
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
 
 class PostAdapter(val productModel: ArrayList<Models>, var clickListener: OnProductItemClickListener) : RecyclerView.Adapter<PostViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -14,7 +20,12 @@ class PostAdapter(val productModel: ArrayList<Models>, var clickListener: OnProd
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        return holder.initialize(productModel.get(position),clickListener)
+        holder.initialize(productModel.get(position),clickListener)
+        val loadImageView = holder?.itemView?.image
+        Picasso.get()
+            .load(productModel[position].image)
+            .memoryPolicy(MemoryPolicy.NO_CACHE)
+            .into(loadImageView)
     }
 
     override fun getItemCount(): Int {
@@ -28,7 +39,7 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val title: TextView = itemView.findViewById(R.id.title)
     private val price: TextView = itemView.findViewById(R.id.price)
     private val description: TextView = itemView.findViewById(R.id.description)
-    private val image: ImageView = itemView.findViewById(R.id.image)
+
 
     fun initialize(productModel: Models, action:OnProductItemClickListener){
         title.text = productModel.title
