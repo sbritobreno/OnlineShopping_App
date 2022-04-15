@@ -29,28 +29,28 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
         var productId = getIntent().getIntExtra("ProductId_mainA", 0)
 
-        var path = "products"
-        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
-        val call = serviceGenerator.getPosts(path)
+        var path = productId.toString()
+        val serviceGenerator = ServiceGenerator.buildService(ApiSingleProductService::class.java)
+        val call = serviceGenerator.getProduct(path)
 
-        call.enqueue(object : Callback<ArrayList<Models>> {
+        call.enqueue(object : Callback<Models> {
             override fun onResponse(
-                call: Call<ArrayList<Models>>,
-                response: Response<ArrayList<Models>>
+                call: Call<Models>,
+                response: Response<Models>
             ) {
                 if(response.isSuccessful) {
-                    product_name_product_details_act.text = response.body()!!.get(productId).title
-                    product_price_product_details_act.text = response.body()!!.get(productId).price
-                    product_description_product_details_act.text = response.body()!!.get(productId).description
-                    val loadImageView = product_img_product_details_act.image
-//                    Picasso.get()
-//                        .load(response.body()?.get(productId)?.image)
-//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                        .into(loadImageView)
+                    product_name_product_details_act.text = response.body()!!.title
+                    product_price_product_details_act.text = response.body()!!.price
+                    product_description_product_details_act.text = response.body()!!.description
+                    val loadImageView = product_img_product_details_act
+                    Picasso.get()
+                        .load(response.body()!!.image)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(loadImageView)
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<Models>>, t: Throwable) {
+            override fun onFailure(call: Call<Models>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
             }

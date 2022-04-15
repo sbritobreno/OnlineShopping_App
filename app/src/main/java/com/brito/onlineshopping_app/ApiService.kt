@@ -8,3 +8,8 @@ interface ApiProductsService {
     @GET("/{path}")
     fun getPosts(@Path("path") path: String): Call<ArrayList<Models>>
 }
+
+interface  ApiSingleProductService {
+    @GET("/products/{id}")
+    fun getProduct(@Path("id") path: String): Call<Models>
+}

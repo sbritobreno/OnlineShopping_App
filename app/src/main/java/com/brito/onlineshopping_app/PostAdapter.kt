@@ -1,13 +1,9 @@
 package com.brito.onlineshopping_app
 
-import android.icu.number.NumberFormatter.with
-import android.icu.number.NumberRangeFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
@@ -21,7 +17,7 @@ class PostAdapter(val productModel: ArrayList<Models>, var clickListener: OnProd
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.initialize(productModel.get(position),clickListener)
-        val loadImageView = holder?.itemView?.image
+        val loadImageView = holder.itemView.image
         Picasso.get()
             .load(productModel[position].image)
             .memoryPolicy(MemoryPolicy.NO_CACHE)
@@ -31,7 +27,6 @@ class PostAdapter(val productModel: ArrayList<Models>, var clickListener: OnProd
     override fun getItemCount(): Int {
         return productModel.size
     }
-
 }
 
 class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
