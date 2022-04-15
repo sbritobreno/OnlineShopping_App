@@ -3,19 +3,61 @@ package com.brito.onlineshopping_app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_product_details.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.net.UnknownServiceException
 
 class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
+        var listOfUsers: ArrayList<User> = arrayListOf()
+
+        val serviceGenerator = ServiceGenerator.buildService(ApiAllUsersService::class.java)
+        val call = serviceGenerator.getAllUsers()
+
+        call.enqueue(object : Callback<ArrayList<User>> {
+            override fun onResponse(
+                call: Call<ArrayList<User>>,
+                response: Response<ArrayList<User>>
+            ) {
+                if(response.isSuccessful) {
+                    listOfUsers = response.body()!!
+                    Log.e("success", listOfUsers.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+        })
+
+        val signUpBtn = findViewById<Button>(R.id.signUp_btn)
+        signUpBtn.setOnClickListener{
+
+            val email = findViewById<EditText>(R.id.email_signUp_act).text.toString()
+            val username = findViewById<EditText>(R.id.username_signUp_act).text.toString()
+            val firstName = findViewById<EditText>(R.id.firstname_signUp_act).text.toString()
+            val lastName = findViewById<EditText>(R.id.lastname_signUp_act).text.toString()
+            val password = findViewById<EditText>(R.id.password_signUp_act).text.toString()
+            val empty = ""
+
+            if(email == empty || username == empty || firstName == empty || lastName == empty || password == empty)
+                Toast.makeText(this, "All text boxes must be filled out", Toast.LENGTH_LONG).show()
+            else
+                createUser(email, username, firstName, lastName, password, listOfUsers)
+        }
 
 
         //Exit BTN
@@ -54,6 +96,15 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             val intent = Intent(this, SignInPageActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun createUser(email: String, username: String, firstName: String, lastName: String, password: String, users: ArrayList<User>){
+
+        for(user in users){
+            if(user.email == email || user.username == username)
+                Toast.makeText(this@SignUpPageActivity, "This username or email is already been used, Try another one!!", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     fun showCategoriesDropDownMenu(v: View){

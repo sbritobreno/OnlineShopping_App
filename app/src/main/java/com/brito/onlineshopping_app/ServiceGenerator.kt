@@ -35,3 +35,8 @@ interface  ApiProductsByCategoryService {
     @GET("/products/category/{category}")
     fun getProductsByCategory(@Path("category") path: String): Call<ArrayList<Products>>
 }
+
+interface  ApiAllUsersService {
+    @GET("/users")
+    fun getAllUsers(): Call<ArrayList<User>>
+}
