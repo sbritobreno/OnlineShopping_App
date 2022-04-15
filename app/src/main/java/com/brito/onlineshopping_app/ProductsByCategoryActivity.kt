@@ -12,42 +12,36 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.GsonBuilder
-import com.google.gson.internal.GsonBuildConfig
-import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import java.io.IOException
 
-class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener{
-
+class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListener,
+    PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_products_by_category)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
+        val recyclerView = findViewById<RecyclerView>(R.id.product_by_category_recyclerview)
 
-        var path = "products"
-        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
-        val call = serviceGenerator.getPosts(path)
+        var category = getIntent().getStringExtra("Category")
+
+        var path = category.toString()
+        val serviceGenerator = ServiceGenerator.buildService(ApiProductsByCategoryService::class.java)
+        val call = serviceGenerator.getProductsByCategory(path)
 
         call.enqueue(object : Callback<ArrayList<Models>> {
             override fun onResponse(
                 call: Call<ArrayList<Models>>,
                 response: Response<ArrayList<Models>>
             ) {
-                if(response.isSuccessful)
+                if (response.isSuccessful)
                     recyclerView.apply {
-                        layoutManager = LinearLayoutManager(this@MainActivity)
-                        adapter = PostAdapter(response.body()!!, this@MainActivity)
+                        layoutManager = LinearLayoutManager(this@ProductsByCategoryActivity)
+                        adapter = PostAdapter(response.body()!!, this@ProductsByCategoryActivity)
                     }
             }
+
             override fun onFailure(call: Call<ArrayList<Models>>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
@@ -73,14 +67,14 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
         //Home BTN
         val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartBtn.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
@@ -88,18 +82,34 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
     override fun onItemClick(item: Models, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-          intent.putExtra("ProductId_mainA", item.id)
-          startActivity(intent)
+        intent.putExtra("ProductId_mainA", item.id)
+        startActivity(intent)
     }
 
-    fun showCategoriesDropDownMenu(v: View){
+//    fun sortCategoryList(category: String, list: ArrayList<Models>): ArrayList<Models>{
+//
+//        if(category == null){
+//            return list
+//        }
+//        else{
+//            var newList: ArrayList<Models> = arrayListOf()
+//
+//            for(p in list)
+//                if(p.category == category)
+//                    newList.add(p)
+//
+//            return newList
+//        }
+//    }
+
+    fun showCategoriesDropDownMenu(v: View) {
         var popup: PopupMenu = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View){
+    fun showUserDropDownMenu(v: View) {
         var popup: PopupMenu = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)

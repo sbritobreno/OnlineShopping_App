@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShopping_App">
         <activity
+            android:name=".ProductsByCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".CartActivity"
             android:exported="false" />
         <activity

@@ -13,3 +13,8 @@ interface  ApiSingleProductService {
     @GET("/products/{id}")
     fun getProduct(@Path("id") path: String): Call<Models>
 }
+
+interface  ApiProductsByCategoryService {
+    @GET("/products/category/{category}")
+    fun getProductsByCategory(@Path("category") path: String): Call<ArrayList<Models>>
+}

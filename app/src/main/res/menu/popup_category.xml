@@ -2,6 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/allproducts_menu"
-        android:title="ALL PRODUCTS"/>
+        android:title="all products"/>
+    <item android:id="@+id/electronics_menu"
+        android:title="electronics"/>
+    <item android:id="@+id/jewelery_menu"
+        android:title="jewelery"/>
+    <item android:id="@+id/men_clothing_menu"
+        android:title="men's clothing"/>
+    <item android:id="@+id/women_clothing_menu"
+        android:title="women's clothing"/>
 
 </menu>
