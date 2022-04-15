@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProductDetailsActivity">
+    tools:context=".SignUpPageActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,18 +27,6 @@
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:textSize="24sp" />
-
-        <ImageButton
-            android:id="@+id/noUserLogged_productDetailsA"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@color/yellow_200"
-            android:padding="12dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/no_user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:onClick="showUserDropDownMenu"/>
 
         <ImageButton
             android:id="@+id/exitIcon"
@@ -68,7 +56,7 @@
             app:srcCompat="@drawable/ic_baseline_login_24" />
 
         <EditText
-            android:id="@+id/email_login_act"
+            android:id="@+id/email_signUp_act"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -78,11 +66,10 @@
             android:drawablePadding="10dp"
             android:background="@drawable/login_bg"
             android:drawableStart="@drawable/ic_baseline_email_24"
-            android:padding="10dp"
-            android:visibility="gone"/>
+            android:padding="10dp"/>
 
         <EditText
-            android:id="@+id/username_login_act"
+            android:id="@+id/username_signUp_act"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -95,7 +82,7 @@
             android:padding="10dp"/>
 
         <EditText
-            android:id="@+id/firstname_login_act"
+            android:id="@+id/firstname_signUp_act"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -105,11 +92,10 @@
             android:drawablePadding="10dp"
             android:background="@drawable/login_bg"
             android:drawableStart="@drawable/ic_baseline_person_24"
-            android:padding="10dp"
-            android:visibility="gone"/>
+            android:padding="10dp"/>
 
         <EditText
-            android:id="@+id/lastname_login_act"
+            android:id="@+id/lastname_signUp_act"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -119,11 +105,10 @@
             android:drawablePadding="10dp"
             android:background="@drawable/login_bg"
             android:drawableStart="@drawable/ic_baseline_person_24"
-            android:padding="10dp"
-            android:visibility="gone"/>
+            android:padding="10dp" />
 
         <EditText
-            android:id="@+id/password_login_act"
+            android:id="@+id/password_signUp_act"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -136,13 +121,13 @@
             android:padding="10dp"/>
 
         <Button
-            android:id="@+id/login_createAccount_btn"
+            android:id="@+id/signUp_btn"
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/yellow_500"
-            android:text="Login"
+            android:text="Sign Up"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -150,11 +135,11 @@
             app:strokeWidth="1dp"/>
 
         <TextView
-            android:id="@+id/change_option_createAccount_login_btn"
+            android:id="@+id/change_signIn_textBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Don't you have an account? Create now"
+            android:text="Already have an account? Login now"
             android:textColor="@color/text"
             android:layout_margin="5dp"
             android:textSize="12sp"/>

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShopping_App">
         <activity
+            android:name=".SignUpPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProductsByCategoryActivity"
             android:exported="false" />
         <activity
@@ -21,7 +24,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LogInPageActivity"
+            android:name=".SignInPageActivity"
             android:exported="false" />
         <activity
             android:name=".ProductDetailsActivity"

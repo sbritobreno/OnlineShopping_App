@@ -30,10 +30,10 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         val serviceGenerator = ServiceGenerator.buildService(ApiProductsByCategoryService::class.java)
         val call = serviceGenerator.getProductsByCategory(path)
 
-        call.enqueue(object : Callback<ArrayList<Models>> {
+        call.enqueue(object : Callback<ArrayList<Products>> {
             override fun onResponse(
-                call: Call<ArrayList<Models>>,
-                response: Response<ArrayList<Models>>
+                call: Call<ArrayList<Products>>,
+                response: Response<ArrayList<Products>>
             ) {
                 if (response.isSuccessful)
                     recyclerView.apply {
@@ -42,7 +42,7 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
                     }
             }
 
-            override fun onFailure(call: Call<ArrayList<Models>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<Products>>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
             }
@@ -80,27 +80,11 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         }
     }
 
-    override fun onItemClick(item: Models, position: Int) {
+    override fun onItemClick(item: Products, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra("ProductId_mainA", item.id)
         startActivity(intent)
     }
-
-//    fun sortCategoryList(category: String, list: ArrayList<Models>): ArrayList<Models>{
-//
-//        if(category == null){
-//            return list
-//        }
-//        else{
-//            var newList: ArrayList<Models> = arrayListOf()
-//
-//            for(p in list)
-//                if(p.category == category)
-//                    newList.add(p)
-//
-//            return newList
-//        }
-//    }
 
     fun showCategoriesDropDownMenu(v: View) {
         var popup: PopupMenu = PopupMenu(this, v)
@@ -152,13 +136,13 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
 
             //No User Menu
             (R.id.log_in_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
+                val intent = Intent(this, SignInPageActivity::class.java)
                 startActivity(intent)
                 return true
             }
             //User logged in MEnu
             (R.id.log_out_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
+                val intent = Intent(this, SignInPageActivity::class.java)
                 startActivity(intent)
                 return true
             }

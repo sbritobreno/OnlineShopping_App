@@ -7,12 +7,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_log_in_page.*
 
-class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_in_page)
+        setContentView(R.layout.activity_sign_in_page)
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -40,46 +39,27 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
         cartBtn.setOnClickListener{
-            Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
-            //val intent = Intent(this, CartActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
         }
 
-        // Change option Login and Sign in
-        val optionEnterBtn = findViewById<TextView>(R.id.change_option_createAccount_login_btn)
-        optionEnterBtn.setOnClickListener {
-            if(change_option_createAccount_login_btn.text == "Already have an account? Login now")
-                onLogintextBtnClick()
-            else
-                onSignInTextBtnClick()
+        // Change to Sign Up
+        val changeToSignUpBtn = findViewById<TextView>(R.id.change_signUp_textBtn)
+        changeToSignUpBtn.setOnClickListener {
+            val intent = Intent(this, SignUpPageActivity::class.java)
+            startActivity(intent)
         }
-    }
-
-    fun onSignInTextBtnClick(){
-        change_option_createAccount_login_btn.text = "Already have an account? Login now"
-        email_login_act.visibility = View.VISIBLE
-        firstname_login_act.visibility = View.VISIBLE
-        lastname_login_act.visibility = View.VISIBLE
-        login_createAccount_btn.text = "Create Account"
-    }
-
-    fun onLogintextBtnClick(){
-        change_option_createAccount_login_btn.text = "Don't you have an account? Create now"
-        email_login_act.visibility = View.GONE
-        firstname_login_act.visibility = View.GONE
-        lastname_login_act.visibility = View.GONE
-        login_createAccount_btn.text = "Login"
     }
 
     fun showCategoriesDropDownMenu(v: View){
-        var popup: PopupMenu = PopupMenu(this, v)
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
     fun showUserDropDownMenu(v: View){
-        var popup: PopupMenu = PopupMenu(this, v)
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
         popup.show()
@@ -96,14 +76,14 @@ class LogInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener
             }
             //No User Menu
             (R.id.log_in_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
+                val intent = Intent(this, SignInPageActivity::class.java)
                 intent.putExtra("Login In", true)
                 startActivity(intent)
                 return true
             }
             //User logged in MEnu
             (R.id.log_out_menu) -> {
-                val intent = Intent(this, LogInPageActivity::class.java)
+                val intent = Intent(this, SignInPageActivity::class.java)
                 startActivity(intent)
                 return true
             }
