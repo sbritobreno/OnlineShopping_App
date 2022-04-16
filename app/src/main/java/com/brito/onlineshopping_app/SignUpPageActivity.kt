@@ -18,14 +18,14 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
-        var listOfUsers: ArrayList<User> = arrayListOf()
+        var listOfUsers: ArrayList<UserResponse> = arrayListOf()
 
         val serviceGenerator = ServiceGenerator.api.getAllUsers()
 
-        serviceGenerator.enqueue(object : Callback<ArrayList<User>> {
+        serviceGenerator.enqueue(object : Callback<ArrayList<UserResponse>> {
             override fun onResponse(
-                call: Call<ArrayList<User>>,
-                response: Response<ArrayList<User>>
+                call: Call<ArrayList<UserResponse>>,
+                response: Response<ArrayList<UserResponse>>
             ) {
                 if (response.isSuccessful) {
                     listOfUsers = response.body()!!
@@ -33,7 +33,7 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
                 t.printStackTrace()
                 Log.d("error", t.message.toString())
             }
@@ -102,7 +102,7 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         }
     }
 
-    fun checkIfUserExist(email: String, username: String, users: ArrayList<User>): Boolean {
+    fun checkIfUserExist(email: String, username: String, users: ArrayList<UserResponse>): Boolean {
         for (user in users) {
             if (user.email == email || user.username == username)
                 return true
@@ -116,30 +116,32 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         firstName: String,
         lastName: String,
         password: String
-    ): User {
-        return User(null, email, 40, Name(firstName, lastName), password, null, username)
+    ): UserRequest {
+        return UserRequest(email, Name(firstName, lastName), password, username)
     }
 
-    fun updateApiListOfUsers(user: User) {
+    fun updateApiListOfUsers(userRequest: UserRequest) {
 
-        val serviceGenerator = ServiceGenerator.api.postNewUser(user)
+        val serviceGenerator = ServiceGenerator.api.postNewUser(userRequest)
 
         serviceGenerator.enqueue(
-            object : Callback<User> {
+            object : Callback<UserResponse> {
 
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+
                     if (response.isSuccessful) {
                         Log.d("successfully", response.body().toString())
-                    }
-                    else
+                    } else
                         Log.d("successfully failed", response.body().toString())
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                     t.printStackTrace()
                     Log.d("error", t.message.toString())
                 }
-            })
+            }
+        )
+
     }
 
     fun showCategoriesDropDownMenu(v: View) {

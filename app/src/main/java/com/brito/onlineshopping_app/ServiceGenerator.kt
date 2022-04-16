@@ -35,8 +35,11 @@ interface ApiService {
     fun getProductsByCategory(@Path("category") path: String): Call<ArrayList<Products>>
 
     @GET("/users")
-    fun getAllUsers(): Call<ArrayList<User>>
+    fun getAllUsers(): Call<ArrayList<UserResponse>>
 
     @POST("/users")
-    fun postNewUser(@Body user: User): Call<User>
+    fun postNewUser(@Body userRequest: UserRequest): Call<UserResponse>
+
+    @POST("//auth/login")
+    fun login(@Body userLogin: UserLogin): Call<Token>
 }

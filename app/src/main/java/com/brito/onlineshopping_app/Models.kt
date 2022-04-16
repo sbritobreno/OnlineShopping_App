@@ -11,8 +11,25 @@ data class Products (
     val quantity: Int? = 0
 )
 
+// Token
+data class Token(
+    val token: String?
+)
+
 // Users
-data class User(
+data class UserLogin(
+    val password: String?,
+    val username: String?
+)
+
+data class UserRequest(
+    val email: String?,
+    val name: Name?,
+    val password: String?,
+    val username: String?
+)
+
+data class UserResponse(
     val address: Address?,
     val email: String?,
     val id: Int?,
