@@ -24,10 +24,9 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         var productId = getIntent().getIntExtra("ProductId_mainA", 0)
 
         var path = productId.toString()
-        val serviceGenerator = ServiceGenerator.buildService(ApiSingleProductService::class.java)
-        val call = serviceGenerator.getProduct(path)
+        val serviceGenerator = ServiceGenerator.api.getProduct(path)
 
-        call.enqueue(object : Callback<Products> {
+        serviceGenerator.enqueue(object : Callback<Products> {
             override fun onResponse(
                 call: Call<Products>,
                 response: Response<Products>

@@ -24,10 +24,9 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
         val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
 
-        val serviceGenerator = ServiceGenerator.buildService(ApiProductsService::class.java)
-        val call = serviceGenerator.getPosts("products")
+        val serviceGenerator = ServiceGenerator.api.getPosts("products")
 
-        call.enqueue(object : Callback<ArrayList<Products>> {
+        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
             override fun onResponse(
                 call: Call<ArrayList<Products>>,
                 response: Response<ArrayList<Products>>

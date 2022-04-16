@@ -8,43 +8,39 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_product_details.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.UnknownServiceException
 
 class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
         var listOfUsers: ArrayList<User> = arrayListOf()
 
-        val serviceGenerator = ServiceGenerator.buildService(ApiAllUsersService::class.java)
-        val call = serviceGenerator.getAllUsers()
+        val serviceGenerator = ServiceGenerator.api.getAllUsers()
 
-        call.enqueue(object : Callback<ArrayList<User>> {
+        serviceGenerator.enqueue(object : Callback<ArrayList<User>> {
             override fun onResponse(
                 call: Call<ArrayList<User>>,
                 response: Response<ArrayList<User>>
             ) {
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     listOfUsers = response.body()!!
-                    Log.e("success", listOfUsers.toString())
+                    Log.d("success", listOfUsers.toString())
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
                 t.printStackTrace()
-                Log.e("error", t.message.toString())
+                Log.d("error", t.message.toString())
             }
         })
 
         val signUpBtn = findViewById<Button>(R.id.signUp_btn)
-        signUpBtn.setOnClickListener{
+        signUpBtn.setOnClickListener {
 
             val email = findViewById<EditText>(R.id.email_signUp_act).text.toString()
             val username = findViewById<EditText>(R.id.username_signUp_act).text.toString()
@@ -53,10 +49,18 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             val password = findViewById<EditText>(R.id.password_signUp_act).text.toString()
             val empty = ""
 
-            if(email == empty || username == empty || firstName == empty || lastName == empty || password == empty)
+            if (email == empty || username == empty || firstName == empty || lastName == empty || password == empty)
                 Toast.makeText(this, "All text boxes must be filled out", Toast.LENGTH_LONG).show()
-            else
-                createUser(email, username, firstName, lastName, password, listOfUsers)
+            else if (checkIfUserExist(email, username, listOfUsers))
+                Toast.makeText(
+                    this@SignUpPageActivity,
+                    "This username or email is already been used, Try another one!!",
+                    Toast.LENGTH_LONG
+                ).show()
+            else {
+                val newUser = createUser(email, username, firstName, lastName, password)
+                updateApiListOfUsers(newUser)
+            }
         }
 
 
@@ -78,14 +82,14 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
         //Home BTN
         val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartBtn.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
@@ -98,23 +102,54 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         }
     }
 
-    fun createUser(email: String, username: String, firstName: String, lastName: String, password: String, users: ArrayList<User>){
-
-        for(user in users){
-            if(user.email == email || user.username == username)
-                Toast.makeText(this@SignUpPageActivity, "This username or email is already been used, Try another one!!", Toast.LENGTH_LONG).show()
+    fun checkIfUserExist(email: String, username: String, users: ArrayList<User>): Boolean {
+        for (user in users) {
+            if (user.email == email || user.username == username)
+                return true
         }
-
+        return false
     }
 
-    fun showCategoriesDropDownMenu(v: View){
+    fun createUser(
+        email: String,
+        username: String,
+        firstName: String,
+        lastName: String,
+        password: String
+    ): User {
+        return User(null, email, 40, Name(firstName, lastName), password, null, username)
+    }
+
+    fun updateApiListOfUsers(user: User) {
+
+        val serviceGenerator = ServiceGenerator.api.postNewUser(user)
+
+        serviceGenerator.enqueue(
+            object : Callback<User> {
+
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if (response.isSuccessful) {
+                        Log.d("successfully", response.body().toString())
+                    }
+                    else
+                        Log.d("successfully failed", response.body().toString())
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("error", t.message.toString())
+                }
+            })
+    }
+
+    fun showCategoriesDropDownMenu(v: View) {
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View){
+    fun showUserDropDownMenu(v: View) {
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
@@ -150,5 +185,5 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             else -> return false
         }
     }
-
 }
+

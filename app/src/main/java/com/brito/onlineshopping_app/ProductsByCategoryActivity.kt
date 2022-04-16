@@ -27,10 +27,9 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         var category = getIntent().getStringExtra("Category")
 
         var path = category.toString()
-        val serviceGenerator = ServiceGenerator.buildService(ApiProductsByCategoryService::class.java)
-        val call = serviceGenerator.getProductsByCategory(path)
+        val serviceGenerator = ServiceGenerator.api.getProductsByCategory(path)
 
-        call.enqueue(object : Callback<ArrayList<Products>> {
+        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
             override fun onResponse(
                 call: Call<ArrayList<Products>>,
                 response: Response<ArrayList<Products>>
