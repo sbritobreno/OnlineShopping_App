@@ -14,7 +14,10 @@ import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_product_details.*
+import kotlinx.android.synthetic.main.activity_product_details.noUserIcon
+import kotlinx.android.synthetic.main.activity_product_details.userIcon
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +55,11 @@ class ProductDetailsActivity : AppCompatActivity(), OnProductItemClickListener, 
             }
 
         })
+
+        if(currentToken.token!!.isNotEmpty()){
+            noUserIcon.visibility = View.GONE
+            userIcon.visibility = View.VISIBLE
+        }
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -98,6 +106,13 @@ class ProductDetailsActivity : AppCompatActivity(), OnProductItemClickListener, 
     }
 
     fun showUserDropDownMenu(v: View){
+        var popup = PopupMenu(this, v)
+        popup.setOnMenuItemClickListener(this)
+        popup.inflate(R.menu.popup_user_logged_in)
+        popup.show()
+    }
+
+    fun showNoUserDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)

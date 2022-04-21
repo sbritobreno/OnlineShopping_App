@@ -13,11 +13,17 @@ import com.brito.onlineshopping_app.OnProductItemClickListener
 import com.brito.onlineshopping_app.Products
 import com.brito.onlineshopping_app.R
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import kotlinx.android.synthetic.main.activity_main.*
 
 class CartActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+
+        if(currentToken.token!!.isNotEmpty()){
+            noUserIcon.visibility = View.GONE
+            userIcon.visibility = View.VISIBLE
+        }
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -64,6 +70,13 @@ class CartActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
     }
 
     fun showUserDropDownMenu(v: View){
+        var popup = PopupMenu(this, v)
+        popup.setOnMenuItemClickListener(this)
+        popup.inflate(R.menu.popup_user_logged_in)
+        popup.show()
+    }
+
+    fun showNoUserDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)

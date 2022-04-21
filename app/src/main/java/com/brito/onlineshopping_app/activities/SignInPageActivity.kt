@@ -63,8 +63,11 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
             }
-        }
 
+            val intent = Intent(this, MainActivity::class.java)
+            finishAffinity()
+            startActivity(intent)
+        }
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -108,11 +111,8 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         viewModel = ViewModelProvider(this).get(SignInActivityViewModel::class.java)
         viewModel.getLoginUserObserver().observe(this, Observer <Token?>{
 
-            if(it  == null) {
-                Toast.makeText(this@SignInPageActivity, "Failed to create User", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this@SignInPageActivity, "Successfully created User", Toast.LENGTH_LONG).show()
-            }
+            if(it  != null)
+                Toast.makeText(this@SignInPageActivity, "Login Successfully", Toast.LENGTH_LONG).show()
         })
     }
 
@@ -128,13 +128,6 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
-        popup.show()
-    }
-
-    fun showUserDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
-        popup.setOnMenuItemClickListener(this)
-        popup.inflate(R.menu.popup_no_user)
         popup.show()
     }
 

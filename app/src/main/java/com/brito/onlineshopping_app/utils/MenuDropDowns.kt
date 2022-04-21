@@ -3,11 +3,10 @@ package com.brito.onlineshopping_app.utils
 import android.app.Activity
 import android.content.Intent
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import com.brito.onlineshopping_app.R
-import com.brito.onlineshopping_app.activities.CartActivity
-import com.brito.onlineshopping_app.activities.MainActivity
-import com.brito.onlineshopping_app.activities.ProductsByCategoryActivity
-import com.brito.onlineshopping_app.activities.SignInPageActivity
+import com.brito.onlineshopping_app.activities.*
 
 open class MenuDropDowns {
 
@@ -44,6 +43,8 @@ open class MenuDropDowns {
             }
             //User logged in MEnu
             (R.id.log_out_menu) -> {
+                currentToken.token = ""
+                finishAffinity(act)
                 return Intent(act, SignInPageActivity::class.java)
             }
             (R.id.user_cart_menu) -> {

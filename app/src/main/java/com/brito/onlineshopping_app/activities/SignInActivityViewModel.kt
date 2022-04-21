@@ -1,5 +1,6 @@
 package com.brito.onlineshopping_app.activities
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,8 @@ import com.brito.onlineshopping_app.UserLogin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
 
 class SignInActivityViewModel: ViewModel() {
 
@@ -29,7 +32,8 @@ class SignInActivityViewModel: ViewModel() {
 
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
                 if(response.isSuccessful) {
-                    Log.d("successfully", response.body().toString())
+                    currentToken = response.body()!!
+                    Log.d("success", currentToken.token.toString())
                     loginUserLiveData.postValue(response.body())
                 } else {
                     Log.d("failed", response.body().toString())

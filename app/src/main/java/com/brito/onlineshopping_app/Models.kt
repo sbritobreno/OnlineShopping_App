@@ -13,7 +13,7 @@ data class Products (
 
 // Token
 data class Token(
-    val token: String?
+    var token: String?
 )
 
 // Users

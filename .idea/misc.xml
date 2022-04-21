@@ -21,6 +21,8 @@
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/product_recycler_template.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_category.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_no_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_user_logged_in.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

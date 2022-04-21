@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,6 +50,11 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
             }
 
         })
+
+        if(currentToken.token!!.isNotEmpty()){
+            noUserIcon.visibility = View.GONE
+            userIcon.visibility = View.VISIBLE
+        }
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -95,6 +101,13 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
     }
 
     fun showUserDropDownMenu(v: View){
+        var popup = PopupMenu(this, v)
+        popup.setOnMenuItemClickListener(this)
+        popup.inflate(R.menu.popup_user_logged_in)
+        popup.show()
+    }
+
+    fun showNoUserDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)

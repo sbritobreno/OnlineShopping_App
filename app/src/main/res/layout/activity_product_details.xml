@@ -28,16 +28,29 @@
             android:textSize="24sp" />
 
         <ImageButton
-            android:id="@+id/noUserLogged_productDetailsA"
+            android:id="@+id/userIcon"
+            android:scaleType="fitCenter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:background="@color/yellow_200"
-            android:onClick="showUserDropDownMenu"
             android:padding="12dp"
+            android:background="@color/yellow_200"
+            app:srcCompat="@drawable/user_logged_in"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:onClick="showUserDropDownMenu"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/noUserIcon"
             android:scaleType="fitCenter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:background="@color/yellow_200"
             app:srcCompat="@drawable/no_user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:onClick="showNoUserDropDownMenu"/>
 
         <ImageButton
             android:id="@+id/exitIcon"

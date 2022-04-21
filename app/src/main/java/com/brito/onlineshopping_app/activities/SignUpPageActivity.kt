@@ -152,13 +152,6 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View){
-        val popup = PopupMenu(this, v)
-        popup.setOnMenuItemClickListener(this)
-        popup.inflate(R.menu.popup_no_user)
-        popup.show()
-    }
-
     // Options from dropdown menus
     override fun onMenuItemClick(item: MenuItem): Boolean{
         var intent = MenuDropDowns().onItemClick(item, this)
