@@ -1,4 +1,4 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_details.*
@@ -16,12 +19,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class ProductDetailsActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
 
-        var productId = getIntent().getIntExtra("ProductId_mainA", 0)
+        var productId = intent.getIntExtra("ProductId_mainA", 0)
 
         var path = productId.toString()
         val serviceGenerator = ServiceGenerator.api.getProduct(path)
@@ -81,48 +84,30 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
     }
 
+    override fun onItemClick(item: Products, position: Int) {
+        val intent = Intent(this@ProductDetailsActivity, ProductDetailsActivity::class.java)
+        intent.putExtra("ProductId_mainA", item.id)
+        startActivity(intent)
+    }
+
     fun showCategoriesDropDownMenu(v: View){
-        var popup: PopupMenu = PopupMenu(this, v)
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
     fun showUserDropDownMenu(v: View){
-        var popup: PopupMenu = PopupMenu(this, v)
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
         popup.show()
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            //Categories Menu
-            (R.id.allproducts_menu) -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("Category", "allproducts_cat")
-                startActivity(intent)
-                return true
-            }
-            //No User Menu
-            (R.id.log_in_menu) -> {
-                val intent = Intent(this, SignInPageActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            //User logged in MEnu
-            (R.id.log_out_menu) -> {
-                val intent = Intent(this, SignInPageActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            (R.id.user_cart_menu) -> {
-                val intent = Intent(this, CartActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            else -> return false
-        }
+    // Options from dropdown menus
+    override fun onMenuItemClick(item: MenuItem): Boolean{
+        var intent = MenuDropDowns().onItemClick(item, this)
+        startActivity(intent)
+        return true
     }
-
 }

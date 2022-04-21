@@ -1,4 +1,4 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,19 +12,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.utils.MenuDropDowns
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListener,
-    PopupMenu.OnMenuItemClickListener {
+class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_by_category)
 
         val recyclerView = findViewById<RecyclerView>(R.id.product_by_category_recyclerview)
 
-        var category = getIntent().getStringExtra("Category")
+        var category = intent.getStringExtra("Category")
 
         var path = category.toString()
         val serviceGenerator = ServiceGenerator.api.getProductsByCategory(path)
@@ -66,14 +68,14 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
 
         //Home BTN
         val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener {
+        homeBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener {
+        cartBtn.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
@@ -85,71 +87,24 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         startActivity(intent)
     }
 
-    fun showCategoriesDropDownMenu(v: View) {
-        var popup: PopupMenu = PopupMenu(this, v)
+    fun showCategoriesDropDownMenu(v: View){
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View) {
-        var popup: PopupMenu = PopupMenu(this, v)
+    fun showUserDropDownMenu(v: View){
+        var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
         popup.show()
     }
 
     // Options from dropdown menus
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            //Categories Menu
-            (R.id.allproducts_menu) -> {
-                val intent = Intent(this, ProductsByCategoryActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            (R.id.electronics_menu) -> {
-                val intent = Intent(this, ProductsByCategoryActivity::class.java)
-                intent.putExtra("Category", "electronics")
-                startActivity(intent)
-                return true
-            }
-            (R.id.jewelery_menu) -> {
-                val intent = Intent(this, ProductsByCategoryActivity::class.java)
-                intent.putExtra("Category", "jewelery")
-                startActivity(intent)
-                return true
-            }
-            (R.id.men_clothing_menu) -> {
-                val intent = Intent(this, ProductsByCategoryActivity::class.java)
-                intent.putExtra("Category", "men's clothing")
-                startActivity(intent)
-                return true
-            }
-            (R.id.women_clothing_menu) -> {
-                val intent = Intent(this, ProductsByCategoryActivity::class.java)
-                intent.putExtra("Category", "women's clothing")
-                startActivity(intent)
-                return true
-            }
-
-            //No User Menu
-            (R.id.log_in_menu) -> {
-                val intent = Intent(this, SignInPageActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            //User logged in MEnu
-            (R.id.log_out_menu) -> {
-                val intent = Intent(this, SignInPageActivity::class.java)
-                startActivity(intent)
-                return true
-            }
-            (R.id.user_cart_menu) -> {
-                Toast.makeText(this, "My Cart", Toast.LENGTH_SHORT).show()
-                return true
-            }
-            else -> return false
-        }
+    override fun onMenuItemClick(item: MenuItem): Boolean{
+        var intent = MenuDropDowns().onItemClick(item, this)
+        startActivity(intent)
+        return true
     }
 }

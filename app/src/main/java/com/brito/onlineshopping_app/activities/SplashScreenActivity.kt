@@ -1,9 +1,10 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.brito.onlineshopping_app.R
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

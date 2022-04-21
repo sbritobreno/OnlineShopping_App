@@ -9,14 +9,14 @@ import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 
-class PostAdapter(val productModel: ArrayList<Products>, var clickListener: OnProductItemClickListener) : RecyclerView.Adapter<PostViewHolder>(){
+class PostAdapter(private val productModel: ArrayList<Products>, private var clickListener: OnProductItemClickListener) : RecyclerView.Adapter<PostViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_recycler_template, parent, false)
         return PostViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.initialize(productModel.get(position),clickListener)
+        holder.initialize(productModel[position],clickListener)
         val loadImageView = holder.itemView.image
         Picasso.get()
             .load(productModel[position].image)
