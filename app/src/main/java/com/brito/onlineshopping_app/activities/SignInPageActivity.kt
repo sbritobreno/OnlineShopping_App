@@ -8,17 +8,24 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import kotlinx.android.synthetic.main.activity_sign_in_page.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
+    lateinit var viewModel: SignInActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_page)
+
+        initViewModel()
 
         var listOfUsers: ArrayList<UserResponse> = arrayListOf()
 
@@ -41,18 +48,17 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             }
         })
 
+        signIn_btn.setOnClickListener {
 
-        val loginBtn = findViewById<Button>(R.id.signIn_btn)
-        loginBtn.setOnClickListener {
+            val username = findViewById<EditText>(R.id.username_login_act).text.toString()
+            val password = findViewById<EditText>(R.id.password_login_act).text.toString()
 
-            val username = findViewById<EditText>(R.id.username_signUp_act).text.toString()
-            val password = findViewById<EditText>(R.id.password_signUp_act).text.toString()
-
-            if (username.isEmpty() || password.isEmpty())
+            if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "All text boxes must be filled out", Toast.LENGTH_LONG).show()
+            }
             else if (checkIfUserExist(password, username, listOfUsers)) {
-                val userLogin = UserLogin(password, username)
-                login(userLogin)
+                val user  = UserLogin(username, password)
+                viewModel.loginUser(user)
             }
             else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
@@ -98,39 +104,24 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         }
     }
 
-    private fun checkIfUserExist(username: String, password: String, users: ArrayList<UserResponse>): Boolean {
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(SignInActivityViewModel::class.java)
+        viewModel.getLoginUserObserver().observe(this, Observer <Token?>{
+
+            if(it  == null) {
+                Toast.makeText(this@SignInPageActivity, "Failed to create User", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this@SignInPageActivity, "Successfully created User", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun checkIfUserExist(password: String, username: String, users: ArrayList<UserResponse>): Boolean {
         for (user in users) {
-            if (user.password == password || user.username == username)
+            if (user.password == password && user.username == username)
                 return true
         }
         return false
-    }
-
-    private fun login(userLogin: UserLogin){
-
-        val serviceGenerator = ServiceGenerator.api.login(userLogin)
-
-            serviceGenerator.enqueue(object : Callback<Token> {
-                override fun onResponse(
-                    call: Call<Token>,
-                    response: Response<Token>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.d("success", response.body().toString())
-                    }
-                    else{
-                        Toast.makeText(this@SignInPageActivity, response.body().toString(), Toast.LENGTH_LONG).show()
-                        Log.d("success failed", response.body().toString())
-                        Log.d("successfully failed", response.errorBody().toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<Token>, t: Throwable) {
-                    t.printStackTrace()
-                    Log.d("error", t.message.toString())
-                }
-            })
-
     }
 
     fun showCategoriesDropDownMenu(v: View){

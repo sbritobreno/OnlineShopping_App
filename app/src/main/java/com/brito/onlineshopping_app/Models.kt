@@ -18,8 +18,8 @@ data class Token(
 
 // Users
 data class UserLogin(
-    val password: String?,
-    val username: String?
+    val username: String?,
+    val password: String?
 )
 
 data class UserRequest(
