@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">OnlineShopping_App</string>
+    <string name="about_this_app">about this app</string>
+    <string name="copyright">© Copyright Breno Brito 2022</string>
+    <string name="build_with_android_studio">Build with Android Studio</string>
 </resources>

@@ -8,13 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.android.synthetic.main.activity_product_details.noUserIcon
 import kotlinx.android.synthetic.main.activity_product_details.userIcon
@@ -22,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProductDetailsActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
+class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
@@ -90,12 +88,6 @@ class ProductDetailsActivity : AppCompatActivity(), OnProductItemClickListener, 
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onItemClick(item: Products, position: Int) {
-        val intent = Intent(this@ProductDetailsActivity, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
-        startActivity(intent)
     }
 
     fun showCategoriesDropDownMenu(v: View){

@@ -3,6 +3,8 @@
 
     <item android:id="@+id/log_out_menu"
         android:title="Log Out"/>
+    <item android:id="@+id/user_profile"
+        android:title="My Profile"/>
     <item android:id="@+id/user_cart_menu"
         android:title="My Cart"/>
 

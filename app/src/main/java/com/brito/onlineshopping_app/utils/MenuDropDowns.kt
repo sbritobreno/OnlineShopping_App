@@ -50,6 +50,9 @@ open class MenuDropDowns {
             (R.id.user_cart_menu) -> {
                 return Intent(act, CartActivity::class.java)
             }
+            (R.id.user_profile) -> {
+                return Intent(act, ProfileActivity::class.java)
+            }
             else -> return Intent(act, act::class.java)
         }
     }

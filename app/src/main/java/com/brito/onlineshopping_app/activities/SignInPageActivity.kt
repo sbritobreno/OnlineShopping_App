@@ -3,6 +3,7 @@ package com.brito.onlineshopping_app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +18,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+var listOfUsers: ArrayList<UserResponse> = arrayListOf()
+
 class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     lateinit var viewModel: SignInActivityViewModel
@@ -26,8 +29,6 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         setContentView(R.layout.activity_sign_in_page)
 
         initViewModel()
-
-        var listOfUsers: ArrayList<UserResponse> = arrayListOf()
 
         val serviceGenerator = ServiceGenerator.api.getAllUsers()
 
@@ -59,14 +60,21 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             else if (checkIfUserExist(password, username, listOfUsers)) {
                 val user  = UserLogin(username, password)
                 viewModel.loginUser(user)
+
+                for (u in listOfUsers){
+                    if(u.username == user.username)
+                        currentUserId = u.id
+                }
+
+                Handler().postDelayed({
+                    val intent = Intent(this, MainActivity::class.java)
+                    finishAffinity()
+                    startActivity(intent)
+                }, 1500)
             }
             else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
             }
-
-            val intent = Intent(this, MainActivity::class.java)
-            finishAffinity()
-            startActivity(intent)
         }
 
         //Exit BTN

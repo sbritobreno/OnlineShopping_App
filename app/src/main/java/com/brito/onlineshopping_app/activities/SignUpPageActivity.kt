@@ -20,27 +20,6 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
-        var listOfUsers: ArrayList<UserResponse> = arrayListOf()
-
-        val serviceGenerator = ServiceGenerator.api.getAllUsers()
-
-        serviceGenerator.enqueue(object : Callback<ArrayList<UserResponse>> {
-            override fun onResponse(
-                call: Call<ArrayList<UserResponse>>,
-                response: Response<ArrayList<UserResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    listOfUsers = response.body()!!
-                    Log.d("success", listOfUsers.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
-                t.printStackTrace()
-                Log.d("error", t.message.toString())
-            }
-        })
-
         val signUpBtn = findViewById<Button>(R.id.signUp_btn)
         signUpBtn.setOnClickListener {
 

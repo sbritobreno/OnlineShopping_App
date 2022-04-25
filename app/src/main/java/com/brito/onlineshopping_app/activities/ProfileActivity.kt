@@ -8,53 +8,63 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
-import kotlinx.android.synthetic.main.activity_main.*
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-var currentToken: Token = Token("")
-var currentUserId: Int? = 0
-
-class MainActivity : AppCompatActivity(), OnProductItemClickListener,
-    PopupMenu.OnMenuItemClickListener {
-
+class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_profile)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
+        var path = currentUserId!!
+        val serviceGenerator = ServiceGenerator.api.getSingleUser(path)
 
-        val serviceGenerator = ServiceGenerator.api.getPosts("products")
-
-        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
+        serviceGenerator.enqueue(object : Callback<UserResponse> {
             override fun onResponse(
-                call: Call<ArrayList<Products>>,
-                response: Response<ArrayList<Products>>
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
             ) {
-                if (response.isSuccessful)
-                    recyclerView.apply {
-                        layoutManager = LinearLayoutManager(this@MainActivity)
-                        adapter = PostAdapter(response.body()!!, this@MainActivity)
-                    }
+                if (response.isSuccessful) {
+                    var fullName = response.body()!!.name?.firstname + " " + response.body()!!.name?.lastname
+                    user_fullName.text = fullName
+                    user_username.text = response.body()!!.username
+                    user_email.text = response.body()!!.email
+
+                    val loadImageView = user_photo
+                    val dpUrl = "https://thispersondoesnotexist.com/image"
+                    Picasso.get()
+                        .load(dpUrl)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(loadImageView)
+                }
             }
 
-            override fun onFailure(call: Call<ArrayList<Products>>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
             }
 
         })
 
-        if (currentToken.token!!.isNotEmpty()) {
-            noUserIcon.visibility = View.GONE
-            userIcon.visibility = View.VISIBLE
+        //Log out BTN
+        user_logout_btn_profileAct.setOnClickListener {
+            val intent = Intent(this, SignInPageActivity::class.java)
+            currentToken.token = ""
+            finishAffinity()
+            startActivity(intent)
+        }
+
+        //About the app BTN
+        aboutTheApp_btn_profileAct.setOnClickListener {
+            val intent = Intent(this, AboutThisAppActivity::class.java)
+            startActivity(intent)
         }
 
         //Exit BTN
@@ -86,12 +96,6 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener,
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onItemClick(item: Products, position: Int) {
-        val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
-        startActivity(intent)
     }
 
     fun showCategoriesDropDownMenu(v: View) {

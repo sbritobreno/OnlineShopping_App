@@ -3,59 +3,18 @@ package com.brito.onlineshopping_app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.R
 import com.brito.onlineshopping_app.utils.MenuDropDowns
-import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-var currentToken: Token = Token("")
-var currentUserId: Int? = 0
-
-class MainActivity : AppCompatActivity(), OnProductItemClickListener,
-    PopupMenu.OnMenuItemClickListener {
-
+class AboutThisAppActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val recyclerView = findViewById<RecyclerView>(R.id.product_recyclerview)
-
-        val serviceGenerator = ServiceGenerator.api.getPosts("products")
-
-        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
-            override fun onResponse(
-                call: Call<ArrayList<Products>>,
-                response: Response<ArrayList<Products>>
-            ) {
-                if (response.isSuccessful)
-                    recyclerView.apply {
-                        layoutManager = LinearLayoutManager(this@MainActivity)
-                        adapter = PostAdapter(response.body()!!, this@MainActivity)
-                    }
-            }
-
-            override fun onFailure(call: Call<ArrayList<Products>>, t: Throwable) {
-                t.printStackTrace()
-                Log.e("error", t.message.toString())
-            }
-
-        })
-
-        if (currentToken.token!!.isNotEmpty()) {
-            noUserIcon.visibility = View.GONE
-            userIcon.visibility = View.VISIBLE
-        }
+        setContentView(R.layout.activity_about_this_app)
 
         //Exit BTN
         val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
@@ -75,40 +34,34 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener,
 
         //Home BTN
         val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener {
+        homeBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener {
+        cartBtn.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
     }
 
-    override fun onItemClick(item: Products, position: Int) {
-        val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
-        startActivity(intent)
-    }
-
-    fun showCategoriesDropDownMenu(v: View) {
+    fun showCategoriesDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View) {
+    fun showUserDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_user_logged_in)
         popup.show()
     }
 
-    fun showNoUserDropDownMenu(v: View) {
+    fun showNoUserDropDownMenu(v: View){
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
@@ -116,7 +69,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener,
     }
 
     // Options from dropdown menus
-    override fun onMenuItemClick(item: MenuItem): Boolean {
+    override fun onMenuItemClick(item: MenuItem): Boolean{
         var intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true

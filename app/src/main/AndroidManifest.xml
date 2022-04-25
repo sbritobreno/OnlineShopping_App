@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShopping_App">
         <activity
+            android:name=".activities.AboutThisAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SignUpPageActivity"
             android:exported="false" />
         <activity
