@@ -66,9 +66,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="20dp">
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,8 +86,7 @@
                     android:id="@+id/product_img_product_details_act"
                     android:layout_width="300dp"
                     android:layout_height="250dp"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/init_template_img" />
+                    android:layout_margin="10dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -140,7 +139,7 @@
                     <TextView
                         android:id="@+id/product_description_product_details_act"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="top"
                         android:layout_weight="1"
                         android:text="description"
@@ -151,19 +150,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center">
-
-                        <Button
-                            android:id="@+id/buy_it_now_btn_product_details_act"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:layout_marginRight="5dp"
-                            android:backgroundTint="@color/white"
-                            android:text="Buy It Now"
-                            android:textColor="@color/yellow_500"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            app:strokeColor="@color/yellow_500"
-                            app:strokeWidth="1dp" />
 
                         <Button
                             android:id="@+id/add_to_cart_btn_product_details_act"

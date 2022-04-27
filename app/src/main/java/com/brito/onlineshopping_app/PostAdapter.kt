@@ -33,13 +33,10 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     private val title: TextView = itemView.findViewById(R.id.title)
     private val price: TextView = itemView.findViewById(R.id.price)
-    private val description: TextView = itemView.findViewById(R.id.description)
-
 
     fun initialize(productModel: Products, action:OnProductItemClickListener){
         title.text = productModel.title
         price.text = productModel.price
-        description.text = productModel.description
 
         itemView.setOnClickListener{
             action.onItemClick(productModel, adapterPosition)

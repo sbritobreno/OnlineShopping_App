@@ -4,11 +4,11 @@ Final Project for the first semester of MobileApp
 ## 1.Authentication
 - [x] Allow User to Signup
 - [x] Log In using username and password
-- [ ] Store userID and token once logged in, to keep the user logged in (even after restarting the app)
+- [x] Store userID and token once logged in, to keep the user logged in (even after restarting the app)
 ## 2.Product Listing
 - [x] List Product Categories
 - [x] On clicking a Category, list Products in that Category
-- [ ] On clicking a Product, show Product description, show buy button and controls to change quantity.
+- [x] On clicking a Product, show Product description, show buy button and controls to change quantity.
 ## 3.Cart
 - [ ] Show cart summary
 - [ ] Show total amount

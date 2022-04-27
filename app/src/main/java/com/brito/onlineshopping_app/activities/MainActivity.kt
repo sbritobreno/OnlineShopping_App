@@ -3,6 +3,7 @@ package com.brito.onlineshopping_app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +25,20 @@ var currentUserId: Int? = 0
 
 class MainActivity : AppCompatActivity(), OnProductItemClickListener,
     PopupMenu.OnMenuItemClickListener {
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putCharSequence("savedToken", currentToken.toString())
+        outState.putInt("savedId", currentUserId!!)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        var storedToken: CharSequence = savedInstanceState.getCharSequence("savedToken")!!
+        var storedId: Int = savedInstanceState.getInt("savedId")
+        currentToken = Token(storedToken.toString())
+        currentUserId = storedId
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
