@@ -23,6 +23,9 @@ interface ApiService {
     @GET("/users/{userId}")
     fun getSingleUser(@Path("userId") path: Int): Call<UserResponse>
 
+    @GET("/carts/user/{userId}")
+    fun getUserCart(@Path("userId") path: Int): Call<ArrayList<Cart>>
+
     @POST("/users")
     fun postNewUser(@Body userRequest: UserRequest): Call<UserResponse>
 

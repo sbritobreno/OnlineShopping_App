@@ -3,24 +3,56 @@ package com.brito.onlineshopping_app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.brito.onlineshopping_app.OnProductItemClickListener
-import com.brito.onlineshopping_app.Products
-import com.brito.onlineshopping_app.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class CartActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
+class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnMenuItemClickListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
-        if(currentToken.token!!.isNotEmpty()){
+        val recyclerView = findViewById<RecyclerView>(R.id.cart_recyclerview)
+
+        val serviceGenerator = ServiceGenerator.api.getUserCart(currentUserId!!)
+
+        serviceGenerator.enqueue(object : Callback<ArrayList<Cart>> {
+            override fun onResponse(
+                call: Call<ArrayList<Cart>>,
+                response: Response<ArrayList<Cart>>
+            ) {
+                if (response.isSuccessful)
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(this@CartActivity)
+                        adapter = CartAdapter(response.body()!!, this@CartActivity)
+
+                        if (currentToken.token!!.isEmpty())
+                            Toast.makeText(this@CartActivity, "You are not logged in", Toast.LENGTH_LONG).show()
+                        else if(response.body()!!.isNullOrEmpty())
+                            Toast.makeText(this@CartActivity, "Cart is empty", Toast.LENGTH_LONG).show()
+                    }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Cart>>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+        })
+
+        if (currentToken.token!!.isNotEmpty()) {
             noUserIcon.visibility = View.GONE
             userIcon.visibility = View.VISIBLE
         }
@@ -43,40 +75,40 @@ class CartActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
         //Home BTN
         val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
         val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartBtn.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
     }
 
-    override fun onItemClick(item: Products, position: Int) {
+    override fun onCartItemClick(item: Cart, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
+        intent.putExtra("ProductId_mainA", item.products[0].productId)
         startActivity(intent)
     }
 
-    fun showCategoriesDropDownMenu(v: View){
+    fun showCategoriesDropDownMenu(v: View) {
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
-    fun showUserDropDownMenu(v: View){
+    fun showUserDropDownMenu(v: View) {
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_user_logged_in)
         popup.show()
     }
 
-    fun showNoUserDropDownMenu(v: View){
+    fun showNoUserDropDownMenu(v: View) {
         var popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
@@ -84,7 +116,7 @@ class CartActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
     }
 
     // Options from dropdown menus
-    override fun onMenuItemClick(item: MenuItem): Boolean{
+    override fun onMenuItemClick(item: MenuItem): Boolean {
         var intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true

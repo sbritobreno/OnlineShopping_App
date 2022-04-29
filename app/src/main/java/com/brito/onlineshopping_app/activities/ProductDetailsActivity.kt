@@ -37,7 +37,7 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             ) {
                 if(response.isSuccessful) {
                     product_name_product_details_act.text = response.body()!!.title
-                    product_price_product_details_act.text = response.body()!!.price
+                    product_price_product_details_act.text = response.body()!!.price.toString()
                     product_description_product_details_act.text = response.body()!!.description
                     val loadImageView = product_img_product_details_act
                     Picasso.get()

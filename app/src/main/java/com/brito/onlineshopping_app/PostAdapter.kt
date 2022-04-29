@@ -36,7 +36,7 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun initialize(productModel: Products, action:OnProductItemClickListener){
         title.text = productModel.title
-        price.text = productModel.price
+        price.text = productModel.price.toString()
 
         itemView.setOnClickListener{
             action.onItemClick(productModel, adapterPosition)

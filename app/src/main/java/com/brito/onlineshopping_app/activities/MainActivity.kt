@@ -20,11 +20,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+var productListFromTheApi: ArrayList<Products> = arrayListOf()
 var currentToken: Token = Token("")
 var currentUserId: Int? = 0
 
-class MainActivity : AppCompatActivity(), OnProductItemClickListener,
-    PopupMenu.OnMenuItemClickListener {
+class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener,
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(this@MainActivity)
                         adapter = PostAdapter(response.body()!!, this@MainActivity)
+                        productListFromTheApi = response.body()!!
                     }
             }
 

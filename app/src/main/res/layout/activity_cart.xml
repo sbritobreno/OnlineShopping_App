@@ -29,28 +29,28 @@
 
         <ImageButton
             android:id="@+id/userIcon"
-            android:scaleType="fitCenter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:padding="12dp"
             android:background="@color/yellow_200"
-            app:srcCompat="@drawable/user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck"
             android:onClick="showUserDropDownMenu"
-            android:visibility="gone"/>
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:srcCompat="@drawable/user_logged_in"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/noUserIcon"
-            android:scaleType="fitCenter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:padding="12dp"
             android:background="@color/yellow_200"
+            android:onClick="showNoUserDropDownMenu"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/no_user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:onClick="showNoUserDropDownMenu"/>
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/exitIcon"
@@ -64,24 +64,13 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cart_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/recyclerview_shape"
-            android:gravity="center"
-            android:orientation="vertical">
-
-
-
-        </LinearLayout>
-    </ScrollView>
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,10 +1,13 @@
 package com.brito.onlineshopping_app
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 // Products
 data class Products (
     val id:Int? = null,
     val title: String? = null,
-    val price: String? = null,
+    val price: Double? = null,
     val category: String? = null,
     val description: String? = null,
     val image: String? = null,
@@ -55,4 +58,16 @@ data class Address(
 data class Geolocation(
     val lat: String?,
     val long: String?
+)
+
+data class Cart(
+    val id: Int?,
+    val userId: Int?,
+    val date: Date?,
+    val products: ArrayList<Product>
+)
+
+data class Product(
+    val productId: Int?,
+    val quantity: Int?
 )
