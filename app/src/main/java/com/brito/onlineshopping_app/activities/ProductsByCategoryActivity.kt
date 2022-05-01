@@ -27,9 +27,9 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
 
         val recyclerView = findViewById<RecyclerView>(R.id.product_by_category_recyclerview)
 
-        var category = intent.getStringExtra("Category")
+        val category = intent.getStringExtra("Category")
 
-        var path = category.toString()
+        val path = category.toString()
         val serviceGenerator = ServiceGenerator.api.getProductsByCategory(path)
 
         serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
@@ -91,6 +91,10 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra("ProductId_mainA", item.id)
         startActivity(intent)
+    }
+    override fun onAddCartClick(item: Products, position: Int) {
+        Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
+        CartActivity().addToCart(item.id!!)
     }
 
     fun showCategoriesDropDownMenu(v: View){

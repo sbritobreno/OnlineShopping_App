@@ -1,10 +1,7 @@
 package com.brito.onlineshopping_app
 
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -31,5 +28,11 @@ interface ApiService {
 
     @POST("/auth/login")
     fun login(@Body userLogin: UserLogin): Call<Token>
+
+    @PATCH("/carts/{cartId}")
+    fun patchCart(@Path("cartId") path: Int, @Body cart: Cart): Call<Cart>
+
+    @DELETE("/carts/{id}")
+    fun deleteCart(@Path("id") path: Int): Call<Cart>
 }
 

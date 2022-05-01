@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
@@ -46,17 +47,21 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                         .into(loadImageView)
                 }
             }
-
             override fun onFailure(call: Call<Products>, t: Throwable) {
                 t.printStackTrace()
                 Log.e("error", t.message.toString())
             }
-
         })
 
         if(currentToken.token!!.isNotEmpty()){
             noUserIcon.visibility = View.GONE
             userIcon.visibility = View.VISIBLE
+        }
+
+        //Add to cart BTN
+        add_to_cart_btn_product_details_act.setOnClickListener{
+            Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
+            CartActivity().addToCart(productId)
         }
 
         //Exit BTN
@@ -91,21 +96,21 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     fun showCategoriesDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
     fun showUserDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_user_logged_in)
         popup.show()
     }
 
     fun showNoUserDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
         popup.show()
@@ -113,7 +118,7 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     // Options from dropdown menus
     override fun onMenuItemClick(item: MenuItem): Boolean{
-        var intent = MenuDropDowns().onItemClick(item, this)
+        val intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
     }

@@ -3,8 +3,11 @@ package com.brito.onlineshopping_app
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.brito.onlineshopping_app.activities.CartActivity
 import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -41,9 +44,13 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         itemView.setOnClickListener{
             action.onItemClick(productModel, adapterPosition)
         }
+        itemView.findViewById<Button>(R.id.add_to_cart_btn_rview).setOnClickListener{
+            action.onAddCartClick(productModel, adapterPosition)
+        }
     }
 }
 
 interface OnProductItemClickListener{
     fun onItemClick(item: Products, position: Int)
+    fun onAddCartClick(item: Products, position: Int)
 }

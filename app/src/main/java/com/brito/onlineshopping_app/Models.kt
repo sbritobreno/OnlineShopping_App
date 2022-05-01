@@ -68,6 +68,6 @@ data class Cart(
 )
 
 data class Product(
-    val productId: Int?,
-    val quantity: Int?
+    var productId: Int?,
+    var quantity: Int?
 )
