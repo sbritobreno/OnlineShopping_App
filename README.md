@@ -11,11 +11,11 @@ Final Project for the first semester of MobileApp
 - [x] On clicking a Product, show Product description, show buy button and controls to change quantity.
 ## 3.Cart
 - [x] Show cart summary
-- [x] Show total amount
-- [x] Purchase button to place an order, show order notification
+- [ ] Show total amount
+- [ ] Purchase button to place an order, show order notification
 ## 4.Show order history
 - [x] List users orders
-- [ ] On clicking an Order, show Order details and Products ordered
+- [x] On clicking an Order, show Order details and Products ordered
 - [x] On clicking a Product, take them to Product description page created for 3.3
 ## 5.Show User details
 - [x] Use the stored userID to show user details
