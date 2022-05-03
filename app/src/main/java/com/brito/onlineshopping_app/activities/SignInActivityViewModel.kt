@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.brito.onlineshopping_app.ServiceGenerator
 import com.brito.onlineshopping_app.Token
 import com.brito.onlineshopping_app.UserLogin
+import com.brito.onlineshopping_app.utils.currentToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
-
 
 class SignInActivityViewModel: ViewModel() {
 

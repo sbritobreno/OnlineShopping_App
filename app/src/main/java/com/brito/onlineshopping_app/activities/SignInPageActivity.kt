@@ -13,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import com.brito.onlineshopping_app.utils.currentUserId
+import com.brito.onlineshopping_app.utils.listOfUsers
 import kotlinx.android.synthetic.main.activity_sign_in_page.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
-var listOfUsers: ArrayList<UserResponse> = arrayListOf()
 
 class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 

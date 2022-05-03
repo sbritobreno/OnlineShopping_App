@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import com.brito.onlineshopping_app.utils.currentToken
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_details.*
@@ -26,8 +27,7 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
 
-        var productId = intent.getIntExtra("ProductId_mainA", 0)
-
+        var productId = intent.getIntExtra("ProductId", 0)
         var path = productId.toString()
         val serviceGenerator = ServiceGenerator.api.getProduct(path)
 

@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.activities.CartActivity
-import com.brito.onlineshopping_app.activities.productListFromTheApi
+import com.brito.onlineshopping_app.utils.productListFromTheApi
 import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -74,11 +74,12 @@ class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             action.onCartItemClick(ProductsInCart, adapterPosition)
         }
         itemView.findViewById<Button>(R.id.buy_btn_cart_rView).setOnClickListener{
-            action.onCartItemClick(ProductsInCart, adapterPosition)
+            action.onBuyItemClick(ProductsInCart, adapterPosition)
         }
     }
 }
 
 interface OnCartItemClickListener{
     fun onCartItemClick(item: Product, position: Int)
+    fun onBuyItemClick(item: Product, position: Int)
 }

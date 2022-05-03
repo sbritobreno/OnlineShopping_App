@@ -53,6 +53,9 @@ open class MenuDropDowns {
             (R.id.user_profile) -> {
                 return Intent(act, ProfileActivity::class.java)
             }
+            (R.id.user_history_menu) -> {
+                return Intent(act, PurchaseHistoryActivity::class.java)
+            }
             else -> return Intent(act, act::class.java)
         }
     }

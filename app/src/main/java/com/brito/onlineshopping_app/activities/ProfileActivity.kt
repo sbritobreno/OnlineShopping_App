@@ -11,6 +11,8 @@ import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import com.brito.onlineshopping_app.utils.currentToken
+import com.brito.onlineshopping_app.utils.currentUserId
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShopping_App">
         <activity
+            android:name=".activities.PurchaseHistoryDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PurchaseHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AboutThisAppActivity"
             android:exported="false" />
         <activity

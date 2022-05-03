@@ -8,6 +8,8 @@
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/hamburger_icon.xml" value="0.257" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.257" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.2845" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_history_24.xml" value="0.247" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.247" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.257" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.247" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2845" />
@@ -20,11 +22,15 @@
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_product_details.xml" value="0.33" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_products_by_category.xml" value="0.35260416666666666" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_purchase_history.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_purchase_history_details.xml" value="0.35260416666666666" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_sign_in_page.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_sign_up_page.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_splash_creen.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/cart_recycler_view_template.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/history_details_recycler_template.xml" value="0.36666666666666664" />
+        <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/history_recycler_template.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/layout/product_recycler_template.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_category.xml" value="0.36666666666666664" />
         <entry key="..\:/MobileApps/OnlineShopping_App/app/src/main/res/menu/popup_no_user.xml" value="0.36666666666666664" />

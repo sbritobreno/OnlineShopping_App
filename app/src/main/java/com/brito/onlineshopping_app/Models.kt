@@ -3,15 +3,23 @@ package com.brito.onlineshopping_app
 import java.util.*
 import kotlin.collections.ArrayList
 
+//Purchased Cart
+data class PurchasedCart(
+    val userId: Int?,
+    val date: String?,
+    var products: ArrayList<Products>,
+    val finalPrice: Double? = null
+)
+
 // Products
 data class Products (
     val id:Int? = null,
     val title: String? = null,
-    val price: Double? = null,
+    var price: Double? = null,
     val category: String? = null,
     val description: String? = null,
     val image: String? = null,
-    val quantity: Int? = 0
+    var quantity: Int? = 0
 )
 
 // Token

@@ -7,5 +7,7 @@
         android:title="My Profile"/>
     <item android:id="@+id/user_cart_menu"
         android:title="My Cart"/>
+    <item android:id="@+id/user_history_menu"
+        android:title="History"/>
 
 </menu>

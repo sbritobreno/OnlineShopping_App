@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import com.brito.onlineshopping_app.utils.currentToken
+import com.brito.onlineshopping_app.utils.currentUserId
+import com.brito.onlineshopping_app.utils.productListFromTheApi
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.cartIcon
@@ -28,12 +31,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-var productListFromTheApi: ArrayList<Products> = arrayListOf()
-var currentToken: Token = Token("")
-var currentUserId: Int? = 0
-
 class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.OnMenuItemClickListener {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -90,7 +88,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
 
     override fun onItemClick(item: Products, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
+        intent.putExtra("ProductId", item.id)
         startActivity(intent)
     }
 
