@@ -11,6 +11,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
 import com.squareup.picasso.MemoryPolicy
@@ -29,29 +30,8 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
         var productId = intent.getIntExtra("ProductId", 0)
         var path = productId.toString()
-        val serviceGenerator = ServiceGenerator.api.getProduct(path)
 
-        serviceGenerator.enqueue(object : Callback<Products> {
-            override fun onResponse(
-                call: Call<Products>,
-                response: Response<Products>
-            ) {
-                if(response.isSuccessful) {
-                    product_name_product_details_act.text = response.body()!!.title
-                    product_price_product_details_act.text = response.body()!!.price.toString()
-                    product_description_product_details_act.text = response.body()!!.description
-                    val loadImageView = product_img_product_details_act
-                    Picasso.get()
-                        .load(response.body()!!.image)
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .into(loadImageView)
-                }
-            }
-            override fun onFailure(call: Call<Products>, t: Throwable) {
-                t.printStackTrace()
-                Log.e("error", t.message.toString())
-            }
-        })
+        getSingleProduct(path)
 
         if(currentToken.token!!.isNotEmpty()){
             noUserIcon.visibility = View.GONE
@@ -60,8 +40,12 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
         //Add to cart BTN
         add_to_cart_btn_product_details_act.setOnClickListener{
-            Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
-            CartActivity().addToCart(productId)
+            if(currentToken.token!!.isNotEmpty()) {
+                Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
+                CartActivity().addToCart(productId)
+            }else{
+                Toast.makeText(this, "You are not logged in", Toast.LENGTH_LONG).show()
+            }
         }
 
         //Exit BTN
@@ -121,5 +105,31 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         val intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
+    }
+
+    private fun getSingleProduct(path: String){
+        val serviceGenerator = ServiceGenerator.api.getProduct(path, currentToken.toString())
+
+        serviceGenerator.enqueue(object : Callback<Products> {
+            override fun onResponse(
+                call: Call<Products>,
+                response: Response<Products>
+            ) {
+                if(response.isSuccessful) {
+                    product_name_product_details_act.text = response.body()!!.title
+                    product_price_product_details_act.text = response.body()!!.price.toString()
+                    product_description_product_details_act.text = response.body()!!.description
+                    val loadImageView = product_img_product_details_act
+                    Picasso.get()
+                        .load(response.body()!!.image)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(loadImageView)
+                }
+            }
+            override fun onFailure(call: Call<Products>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+        })
     }
 }

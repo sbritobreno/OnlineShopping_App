@@ -11,11 +11,15 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.adapters.OnProductItemClickListener
+import com.brito.onlineshopping_app.adapters.PostAdapter
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.noUserIcon
+import kotlinx.android.synthetic.main.activity_main.userIcon
+import kotlinx.android.synthetic.main.activity_products_by_category.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,31 +29,9 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_by_category)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.product_by_category_recyclerview)
-
         val category = intent.getStringExtra("Category")
-
         val path = category.toString()
-        val serviceGenerator = ServiceGenerator.api.getProductsByCategory(path)
-
-        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
-            override fun onResponse(
-                call: Call<ArrayList<Products>>,
-                response: Response<ArrayList<Products>>
-            ) {
-                if (response.isSuccessful)
-                    recyclerView.apply {
-                        layoutManager = LinearLayoutManager(this@ProductsByCategoryActivity)
-                        adapter = PostAdapter(response.body()!!, this@ProductsByCategoryActivity)
-                    }
-            }
-
-            override fun onFailure(call: Call<ArrayList<Products>>, t: Throwable) {
-                t.printStackTrace()
-                Log.e("error", t.message.toString())
-            }
-
-        })
+        getProductsByCategory(path)
 
         if(currentToken.token!!.isNotEmpty()){
             noUserIcon.visibility = View.GONE
@@ -123,5 +105,25 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         var intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
+    }
+
+    private fun getProductsByCategory(path: String){
+        val serviceGenerator = ServiceGenerator.api.getProductsByCategory(path, currentToken.toString())
+
+        serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
+            override fun onResponse(
+                call: Call<ArrayList<Products>>,
+                response: Response<ArrayList<Products>>
+            ) {
+                if (response.isSuccessful) {
+                        product_by_category_recyclerview.layoutManager = LinearLayoutManager(this@ProductsByCategoryActivity)
+                        product_by_category_recyclerview.adapter = PostAdapter(response.body()!!, this@ProductsByCategoryActivity)
+                    }
+            }
+            override fun onFailure(call: Call<ArrayList<Products>>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+        })
     }
 }

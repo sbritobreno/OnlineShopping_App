@@ -1,5 +1,9 @@
 package com.brito.onlineshopping_app.activities
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -7,32 +11,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.adapters.CartAdapter
+import com.brito.onlineshopping_app.adapters.OnCartItemClickListener
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.*
 import kotlinx.android.synthetic.main.activity_cart.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.cartIcon
 import kotlinx.android.synthetic.main.activity_main.exitIcon
 import kotlinx.android.synthetic.main.activity_main.homeIcon
 import kotlinx.android.synthetic.main.activity_main.noUserIcon
 import kotlinx.android.synthetic.main.activity_main.userIcon
-import kotlinx.android.synthetic.main.cart_recycler_view_template.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
-
 
 class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -124,7 +126,13 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
             purchasedHistory.add(PurchasedCart(currentUserId, formattedDate, arrayListOf(product), finalPrice))
             deleteItemFromCart(item.productId!!)
 
-            Toast.makeText(this, "Purchased Done...", Toast.LENGTH_LONG).show()
+            var productName = ""
+            for (p in productListFromTheApi)
+                if(p.id == item.productId)
+                    productName = p.title!!
+
+            createNotificationChannel()
+            sendNotification(productName)
         }
         val createBuild = eBuilder.create()
         createBuild.show()
@@ -139,6 +147,36 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
         }
         allProductsInCart.remove(productToBeRemove)
         cart_recyclerview.adapter!!.notifyDataSetChanged()
+    }
+
+    private fun createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "General Notifications Channel", NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = "New Purchase"
+            }
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification(productName: String) {
+        val intent = Intent(this, PurchaseHistoryActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(this,0,intent,0)
+
+        val builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            .setContentTitle("New Purchase")
+            .setContentText("Product purchased successfully")
+            .setSmallIcon(R.drawable.ic_baseline_shopping_cart_24)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(productName))
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationId = 101
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId, builder.build())
+        }
     }
 
     override fun onCartItemClick(item: Product, position: Int) {
@@ -176,7 +214,7 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
     }
 
     fun getUserCartList() {
-        val serviceGenerator = ServiceGenerator.api.getUserCart(2)
+        val serviceGenerator = ServiceGenerator.api.getUserCart(currentUserId!!, currentToken.toString())
         serviceGenerator.enqueue(object : Callback<ArrayList<Cart>> {
             override fun onResponse(
                 call: Call<ArrayList<Cart>>,
@@ -198,9 +236,10 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
     }
 
     private fun checkCartStatus() {
-        if (currentToken.token!!.isEmpty()) Toast.makeText(
-            this@CartActivity, "You are not logged in", Toast.LENGTH_LONG
-        ).show()
+        if (currentToken.token!!.isEmpty()){
+            allProductsInCart = arrayListOf()
+            Toast.makeText(this@CartActivity, "You are not logged in", Toast.LENGTH_LONG).show()
+        }
         else if (allProductsInCart.isEmpty()) Toast.makeText(
             this@CartActivity, "Cart is empty", Toast.LENGTH_LONG
         ).show()

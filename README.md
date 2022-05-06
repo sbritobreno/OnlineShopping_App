@@ -11,8 +11,8 @@ Final Project for the first semester of MobileApp
 - [x] On clicking a Product, show Product description, show buy button and controls to change quantity.
 ## 3.Cart
 - [x] Show cart summary
-- [ ] Show total amount
-- [ ] Purchase button to place an order, show order notification
+- [x] Show total amount
+- [x] Purchase button to place an order, show order notification
 ## 4.Show order history
 - [x] List users orders
 - [x] On clicking an Order, show Order details and Products ordered
@@ -23,7 +23,7 @@ Final Project for the first semester of MobileApp
 - [x] Show Logout button, on click take back to Signup / Log In page (Restart should not auto login after logout)
 ## 6.UI/Implementation Requirements
 - [x] RecyclerView used for all Lists: Categories, Products, Orders
-- [ ] If logged in, attach authentication token to all requests until logout
+- [x] If logged in, attach authentication token to all requests until logout
 - [x] Add a small "About this app" button in the profile page, that shows a page on click with your copyright details and credits
 ## 7.Bonus
 - [ ] ViewPager2 with bottom TabLayout for: Shop, Cart, Orders, Profile icons

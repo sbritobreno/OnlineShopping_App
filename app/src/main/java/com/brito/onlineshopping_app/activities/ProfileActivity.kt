@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
 import com.brito.onlineshopping_app.utils.currentUserId
@@ -26,41 +27,26 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         setContentView(R.layout.activity_profile)
 
         var path = currentUserId!!
-        val serviceGenerator = ServiceGenerator.api.getSingleUser(path)
-
-        serviceGenerator.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(
-                call: Call<UserResponse>,
-                response: Response<UserResponse>
-            ) {
-                if (response.isSuccessful) {
-                    var fullName = response.body()!!.name?.firstname + " " + response.body()!!.name?.lastname
-                    user_fullName.text = fullName
-                    user_username.text = response.body()!!.username
-                    user_email.text = response.body()!!.email
-
-                    val loadImageView = user_photo
-                    val dpUrl = "https://thispersondoesnotexist.com/image"
-                    Picasso.get()
-                        .load(dpUrl)
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .into(loadImageView)
-                }
-            }
-
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                t.printStackTrace()
-                Log.e("error", t.message.toString())
-            }
-
-        })
+        getUserProfile(path)
 
         //Log out BTN
         user_logout_btn_profileAct.setOnClickListener {
             val intent = Intent(this, SignInPageActivity::class.java)
-            currentToken.token = ""
-            finishAffinity()
-            startActivity(intent)
+            val eBuilder = AlertDialog.Builder(this)
+            eBuilder.setTitle("Log Out")
+            eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
+            eBuilder.setMessage("Do you really want to log out ?")
+            eBuilder.setPositiveButton("Yes") { _, _ ->
+                currentToken.token = ""
+                currentUserId = 0
+                finishAffinity()
+                startActivity(intent)
+            }
+            eBuilder.setNegativeButton("No") { _, _ ->
+            }
+            val createBuild = eBuilder.create()
+            createBuild.show()
+
         }
 
         //About the app BTN
@@ -126,5 +112,35 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         var intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
+    }
+
+    private fun getUserProfile(path: Int){
+        val serviceGenerator = ServiceGenerator.api.getSingleUser(path, currentToken.toString())
+
+        serviceGenerator.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
+            ) {
+                if (response.isSuccessful) {
+                    var fullName = response.body()!!.name?.firstname + " " + response.body()!!.name?.lastname
+                    user_fullName.text = fullName
+                    user_username.text = response.body()!!.username
+                    user_email.text = response.body()!!.email
+
+                    val loadImageView = user_photo
+                    val dpUrl = "https://thispersondoesnotexist.com/image"
+                    Picasso.get()
+                        .load(dpUrl)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(loadImageView)
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                t.printStackTrace()
+                Log.e("error", t.message.toString())
+            }
+        })
     }
 }

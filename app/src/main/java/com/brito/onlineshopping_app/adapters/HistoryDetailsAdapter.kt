@@ -1,16 +1,15 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.adapters
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.brito.onlineshopping_app.Products
+import com.brito.onlineshopping_app.R
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.history_details_recycler_template.view.*
-import kotlinx.android.synthetic.main.product_recycler_template.view.*
 
 class HistoryDetailsAdapter(private val historyDetailsList: ArrayList<Products>, private var clickListener: OnHistoryDetailsItemClickListener) : RecyclerView.Adapter<HistoryDetailsViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryDetailsViewHolder {
@@ -36,11 +35,14 @@ class HistoryDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     private val name: TextView = itemView.findViewById(R.id.productName_historyDetails_rView)
 
-    fun initialize(historyDetailsList: Products, action:OnHistoryDetailsItemClickListener){
+    fun initialize(historyDetailsList: Products, action: OnHistoryDetailsItemClickListener){
 
         name.text = historyDetailsList.title
 
         itemView.setOnClickListener{
+            action.onItemClick(historyDetailsList, adapterPosition)
+        }
+        itemView.review_purchased_btn_rView.setOnClickListener {
             action.onItemClick(historyDetailsList, adapterPosition)
         }
     }

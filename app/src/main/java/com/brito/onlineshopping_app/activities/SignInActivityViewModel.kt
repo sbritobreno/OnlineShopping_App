@@ -1,10 +1,9 @@
 package com.brito.onlineshopping_app.activities
 
-import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.brito.onlineshopping_app.ServiceGenerator
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.Token
 import com.brito.onlineshopping_app.UserLogin
 import com.brito.onlineshopping_app.utils.currentToken
@@ -22,7 +21,7 @@ class SignInActivityViewModel: ViewModel() {
 
     fun loginUser(user: UserLogin) {
 
-        val serviceGenerator = ServiceGenerator.api.login(user)
+        val serviceGenerator = ServiceGenerator.api.login(user, currentToken.toString())
 
         serviceGenerator.enqueue(object: Callback<Token> {
             override fun onFailure(call: Call<Token>, t: Throwable) {

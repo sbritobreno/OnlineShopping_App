@@ -44,6 +44,7 @@ open class MenuDropDowns {
             //User logged in MEnu
             (R.id.log_out_menu) -> {
                 currentToken.token = ""
+                currentUserId = 0
                 finishAffinity(act)
                 return Intent(act, SignInPageActivity::class.java)
             }

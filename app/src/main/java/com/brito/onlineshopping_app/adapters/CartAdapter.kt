@@ -1,4 +1,4 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.brito.onlineshopping_app.activities.CartActivity
+import com.brito.onlineshopping_app.Product
+import com.brito.onlineshopping_app.Products
+import com.brito.onlineshopping_app.R
 import com.brito.onlineshopping_app.utils.productListFromTheApi
-import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 
@@ -50,7 +51,7 @@ class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private var quantity: TextView = itemView.findViewById(R.id.quantity_cart_rView)
     private var image: ImageView = itemView.findViewById(R.id.image_cart_rView)
 
-    fun initialize(ProductsInCart: Product, action:OnCartItemClickListener){
+    fun initialize(ProductsInCart: Product, action: OnCartItemClickListener){
 
         var cartItemId = ProductsInCart.productId
         var cartItem = Products()

@@ -1,13 +1,13 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.brito.onlineshopping_app.activities.CartActivity
+import com.brito.onlineshopping_app.Products
+import com.brito.onlineshopping_app.R
 import kotlinx.android.synthetic.main.product_recycler_template.view.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -37,7 +37,7 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val title: TextView = itemView.findViewById(R.id.title)
     private val price: TextView = itemView.findViewById(R.id.price)
 
-    fun initialize(productModel: Products, action:OnProductItemClickListener){
+    fun initialize(productModel: Products, action: OnProductItemClickListener){
         title.text = productModel.title
         price.text = productModel.price.toString()
 

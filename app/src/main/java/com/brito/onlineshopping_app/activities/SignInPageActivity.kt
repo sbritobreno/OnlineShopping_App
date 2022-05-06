@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentUserId
 import com.brito.onlineshopping_app.utils.listOfUsers
@@ -29,25 +30,7 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         setContentView(R.layout.activity_sign_in_page)
 
         initViewModel()
-
-        val serviceGenerator = ServiceGenerator.api.getAllUsers()
-
-        serviceGenerator.enqueue(object : Callback<ArrayList<UserResponse>> {
-            override fun onResponse(
-                call: Call<ArrayList<UserResponse>>,
-                response: Response<ArrayList<UserResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    listOfUsers = response.body()!!
-                    Log.d("success", listOfUsers.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
-                t.printStackTrace()
-                Log.d("error", t.message.toString())
-            }
-        })
+        getUserList()
 
         signIn_btn.setOnClickListener {
 
@@ -70,7 +53,7 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
                     val intent = Intent(this, MainActivity::class.java)
                     finishAffinity()
                     startActivity(intent)
-                }, 1500)
+                }, 1600)
             }
             else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
@@ -144,5 +127,26 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         var intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
+    }
+
+    private fun getUserList(){
+        val serviceGenerator = ServiceGenerator.api.getAllUsers()
+
+        serviceGenerator.enqueue(object : Callback<ArrayList<UserResponse>> {
+            override fun onResponse(
+                call: Call<ArrayList<UserResponse>>,
+                response: Response<ArrayList<UserResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    listOfUsers = response.body()!!
+                    Log.d("success", listOfUsers.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("error", t.message.toString())
+            }
+        })
     }
 }

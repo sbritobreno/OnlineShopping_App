@@ -1,4 +1,4 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

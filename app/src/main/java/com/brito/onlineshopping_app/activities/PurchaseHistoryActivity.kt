@@ -2,7 +2,6 @@ package com.brito.onlineshopping_app.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
@@ -11,9 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.adapters.HistoryAdapter
+import com.brito.onlineshopping_app.adapters.OnHistoryItemClickListener
 import com.brito.onlineshopping_app.utils.*
-import kotlinx.android.synthetic.main.activity_cart.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.cartIcon
 import kotlinx.android.synthetic.main.activity_main.exitIcon
 import kotlinx.android.synthetic.main.activity_main.homeIcon

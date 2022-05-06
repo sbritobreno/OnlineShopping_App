@@ -9,7 +9,9 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
+import com.brito.onlineshopping_app.utils.currentToken
 import com.brito.onlineshopping_app.utils.listOfUsers
 import retrofit2.Call
 import retrofit2.Callback
@@ -103,7 +105,7 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     private fun updateApiListOfUsers(userRequest: UserRequest) {
 
-        val serviceGenerator = ServiceGenerator.api.postNewUser(userRequest)
+        val serviceGenerator = ServiceGenerator.api.postNewUser(userRequest, currentToken.toString())
 
         serviceGenerator.enqueue(
             object : Callback<UserResponse> {

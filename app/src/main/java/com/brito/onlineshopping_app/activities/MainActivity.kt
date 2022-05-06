@@ -7,26 +7,24 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.adapters.OnProductItemClickListener
+import com.brito.onlineshopping_app.adapters.PostAdapter
+import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
 import com.brito.onlineshopping_app.utils.currentUserId
 import com.brito.onlineshopping_app.utils.productListFromTheApi
-import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.cartIcon
 import kotlinx.android.synthetic.main.activity_main.exitIcon
 import kotlinx.android.synthetic.main.activity_main.homeIcon
 import kotlinx.android.synthetic.main.activity_main.noUserIcon
 import kotlinx.android.synthetic.main.activity_main.userIcon
-import kotlinx.android.synthetic.main.activity_product_details.*
-import kotlinx.android.synthetic.main.product_recycler_template.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -93,8 +91,12 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
     }
 
     override fun onAddCartClick(item: Products, position: Int) {
-        Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
-        CartActivity().addToCart(item.id!!)
+        if(currentToken.token!!.isNotEmpty()) {
+            Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
+            CartActivity().addToCart(item.id!!)
+        }else{
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun showCategoriesDropDownMenu(v: View) {
@@ -126,7 +128,7 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
     }
 
     private fun getListOfProducts(){
-        val serviceGenerator = ServiceGenerator.api.getPosts("products")
+        val serviceGenerator = ServiceGenerator.api.getPosts("products", currentToken.toString())
         serviceGenerator.enqueue(object : Callback<ArrayList<Products>> {
             override fun onResponse(
                 call: Call<ArrayList<Products>>,

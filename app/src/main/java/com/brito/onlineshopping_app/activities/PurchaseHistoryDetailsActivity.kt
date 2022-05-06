@@ -9,9 +9,10 @@ import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brito.onlineshopping_app.*
+import com.brito.onlineshopping_app.adapters.HistoryDetailsAdapter
+import com.brito.onlineshopping_app.adapters.OnHistoryDetailsItemClickListener
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
-import com.brito.onlineshopping_app.utils.productListFromTheApi
 import com.brito.onlineshopping_app.utils.singlePurchasedHistory
 import kotlinx.android.synthetic.main.activity_main.cartIcon
 import kotlinx.android.synthetic.main.activity_main.exitIcon
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.homeIcon
 import kotlinx.android.synthetic.main.activity_main.noUserIcon
 import kotlinx.android.synthetic.main.activity_main.userIcon
 import kotlinx.android.synthetic.main.activity_purchase_history_details.*
+import kotlinx.android.synthetic.main.history_details_recycler_template.*
 
 class PurchaseHistoryDetailsActivity : AppCompatActivity(), OnHistoryDetailsItemClickListener, PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {

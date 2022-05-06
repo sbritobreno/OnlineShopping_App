@@ -1,14 +1,12 @@
-package com.brito.onlineshopping_app
+package com.brito.onlineshopping_app.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.product_recycler_template.view.*
+import com.brito.onlineshopping_app.PurchasedCart
+import com.brito.onlineshopping_app.R
 
 class HistoryAdapter(private val historyList: ArrayList<PurchasedCart>, private var clickListener: OnHistoryItemClickListener) : RecyclerView.Adapter<HistoryViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -31,7 +29,7 @@ class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val productsQuantity: TextView = itemView.findViewById(R.id.productsQuantity)
     private val totalPrice: TextView = itemView.findViewById(R.id.totalPrice)
 
-    fun initialize(historyList: PurchasedCart, action:OnHistoryItemClickListener){
+    fun initialize(historyList: PurchasedCart, action: OnHistoryItemClickListener){
 
         date.text = historyList.date
         productsQuantity.text = historyList.products[0].quantity.toString()
