@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,19 +12,17 @@ import com.brito.onlineshopping_app.retrofit.ServiceGenerator
 import com.brito.onlineshopping_app.utils.MenuDropDowns
 import com.brito.onlineshopping_app.utils.currentToken
 import com.brito.onlineshopping_app.utils.listOfUsers
+import kotlinx.android.synthetic.main.activity_sign_up_page.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_page)
 
-        val signUpBtn = findViewById<Button>(R.id.signUp_btn)
-        signUpBtn.setOnClickListener {
-
+        signUp_btn.setOnClickListener {
             val email = findViewById<EditText>(R.id.email_signUp_act).text.toString()
             val username = findViewById<EditText>(R.id.username_signUp_act).text.toString()
             val firstName = findViewById<EditText>(R.id.firstname_signUp_act).text.toString()
@@ -46,10 +43,8 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
             }
         }
 
-
         //Exit BTN
-        val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
-        exitBtn.setOnClickListener {
+        exitIcon.setOnClickListener {
             val eBuilder = AlertDialog.Builder(this)
             eBuilder.setTitle("Exit")
             eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
@@ -64,22 +59,19 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         }
 
         //Home BTN
-        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeIcon.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
-        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartIcon.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
 
         // Change to Sign Up
-        val changeToSignInBtn = findViewById<TextView>(R.id.change_signIn_textBtn)
-        changeToSignInBtn.setOnClickListener {
+        change_signIn_textBtn.setOnClickListener {
             val intent = Intent(this, SignInPageActivity::class.java)
             startActivity(intent)
         }
@@ -122,9 +114,7 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
                     t.printStackTrace()
                     Log.d("error", t.message.toString())
                 }
-            }
-        )
-
+            })
     }
 
     fun showCategoriesDropDownMenu(v: View){
@@ -136,7 +126,7 @@ class SignUpPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     // Options from dropdown menus
     override fun onMenuItemClick(item: MenuItem): Boolean{
-        var intent = MenuDropDowns().onItemClick(item, this)
+        val intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
     }

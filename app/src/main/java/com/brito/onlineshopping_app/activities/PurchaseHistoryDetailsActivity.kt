@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,14 +19,12 @@ import kotlinx.android.synthetic.main.activity_main.homeIcon
 import kotlinx.android.synthetic.main.activity_main.noUserIcon
 import kotlinx.android.synthetic.main.activity_main.userIcon
 import kotlinx.android.synthetic.main.activity_purchase_history_details.*
-import kotlinx.android.synthetic.main.history_details_recycler_template.*
 
 class PurchaseHistoryDetailsActivity : AppCompatActivity(), OnHistoryDetailsItemClickListener, PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_history_details)
 
-        //fix
         history_details_recyclerview.adapter = HistoryDetailsAdapter(singlePurchasedHistory, this)
         history_details_recyclerview.layoutManager = LinearLayoutManager(this)
 

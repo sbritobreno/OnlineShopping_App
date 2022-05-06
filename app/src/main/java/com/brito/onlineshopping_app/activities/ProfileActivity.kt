@@ -26,7 +26,7 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        var path = currentUserId!!
+        val path = currentUserId!!
         getUserProfile(path)
 
         //Log out BTN
@@ -56,8 +56,7 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         }
 
         //Exit BTN
-        val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
-        exitBtn.setOnClickListener {
+        exitIcon.setOnClickListener {
             val eBuilder = AlertDialog.Builder(this)
             eBuilder.setTitle("Exit")
             eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
@@ -72,15 +71,13 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         }
 
         //Home BTN
-        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener {
+        homeIcon.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
-        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener {
+        cartIcon.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
@@ -123,7 +120,7 @@ class ProfileActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 response: Response<UserResponse>
             ) {
                 if (response.isSuccessful) {
-                    var fullName = response.body()!!.name?.firstname + " " + response.body()!!.name?.lastname
+                    val fullName = response.body()!!.name?.firstname + " " + response.body()!!.name?.lastname
                     user_fullName.text = fullName
                     user_username.text = response.body()!!.username
                     user_email.text = response.body()!!.email

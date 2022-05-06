@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -39,8 +38,7 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         }
 
         //Exit BTN
-        val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
-        exitBtn.setOnClickListener {
+        exitIcon.setOnClickListener {
             val eBuilder = AlertDialog.Builder(this)
             eBuilder.setTitle("Exit")
             eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
@@ -55,15 +53,13 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
         }
 
         //Home BTN
-        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeIcon.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
-        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartIcon.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
@@ -71,30 +67,34 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
 
     override fun onItemClick(item: Products, position: Int) {
         val intent = Intent(this, ProductDetailsActivity::class.java)
-        intent.putExtra("ProductId_mainA", item.id)
+        intent.putExtra("ProductId", item.id)
         startActivity(intent)
     }
     override fun onAddCartClick(item: Products, position: Int) {
-        Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
-        CartActivity().addToCart(item.id!!)
+        if(currentToken.token!!.isNotEmpty()) {
+            Toast.makeText(this, "Product added to cart", Toast.LENGTH_LONG).show()
+            CartActivity().addToCart(item.id!!)
+        }else{
+            Toast.makeText(this, "You are not logged in", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun showCategoriesDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
     }
 
     fun showUserDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_user_logged_in)
         popup.show()
     }
 
     fun showNoUserDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_no_user)
         popup.show()
@@ -102,7 +102,7 @@ class ProductsByCategoryActivity : AppCompatActivity(), OnProductItemClickListen
 
     // Options from dropdown menus
     override fun onMenuItemClick(item: MenuItem): Boolean{
-        var intent = MenuDropDowns().onItemClick(item, this)
+        val intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
     }

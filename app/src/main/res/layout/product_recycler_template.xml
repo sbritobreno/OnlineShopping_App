@@ -43,11 +43,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/currency_symbol_rview"
+                    android:id="@+id/currency_symbol_rView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
@@ -73,23 +73,20 @@
                 android:gravity="right">
 
                 <Button
-                    android:id="@+id/add_to_cart_btn_rview"
+                    android:id="@+id/add_to_cart_btn_rView"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="100dp"
-                    android:text="Add To Cart"
+                    android:layout_marginStart="100dp"
                     android:backgroundTint="@color/white"
+                    android:text="Add To Cart"
                     android:textColor="@color/yellow_500"
                     android:textSize="9sp"
                     android:textStyle="bold"
-                    tools:ignore="TouchTargetSizeCheck"
                     app:strokeColor="@color/yellow_500"
-                    app:strokeWidth="1dp"/>
+                    app:strokeWidth="1dp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

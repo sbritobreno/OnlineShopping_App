@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,8 +18,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif-black"
             android:padding="5dp"
             android:text="@string/app_name"
@@ -30,28 +29,28 @@
 
         <ImageButton
             android:id="@+id/userIcon"
-            android:scaleType="fitCenter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:padding="12dp"
             android:background="@color/yellow_200"
-            app:srcCompat="@drawable/user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck"
             android:onClick="showUserDropDownMenu"
-            android:visibility="gone"/>
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:srcCompat="@drawable/user_logged_in"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/noUserIcon"
-            android:scaleType="fitCenter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:padding="12dp"
             android:background="@color/yellow_200"
+            android:onClick="showNoUserDropDownMenu"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/no_user_logged_in"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:onClick="showNoUserDropDownMenu"/>
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/exitIcon"
@@ -82,8 +81,8 @@
             android:id="@+id/hamburgerIcon"
             android:layout_width="wrap_content"
             android:layout_height="58dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:background="@color/yellow_200"
             android:onClick="showCategoriesDropDownMenu"
             app:srcCompat="@drawable/hamburger_icon"
@@ -93,8 +92,8 @@
             android:id="@+id/homeIcon"
             android:layout_width="wrap_content"
             android:layout_height="58dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:background="@color/yellow_200"
             app:srcCompat="@drawable/ic_baseline_home_24"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -103,8 +102,8 @@
             android:id="@+id/cartIcon"
             android:layout_width="wrap_content"
             android:layout_height="58dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:background="@color/yellow_200"
             app:srcCompat="@drawable/ic_baseline_shopping_cart_24"
             tools:ignore="SpeakableTextPresentCheck" />

@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.retrofit
-
 import com.brito.onlineshopping_app.*
 import retrofit2.Call
 import retrofit2.http.*

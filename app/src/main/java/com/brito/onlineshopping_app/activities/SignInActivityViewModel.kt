@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SignInActivityViewModel: ViewModel() {
-
     var loginUserLiveData: MutableLiveData<Token?> = MutableLiveData()
 
     fun getLoginUserObserver(): MutableLiveData<Token?> {
@@ -20,7 +18,6 @@ class SignInActivityViewModel: ViewModel() {
     }
 
     fun loginUser(user: UserLogin) {
-
         val serviceGenerator = ServiceGenerator.api.login(user, currentToken.toString())
 
         serviceGenerator.enqueue(object: Callback<Token> {

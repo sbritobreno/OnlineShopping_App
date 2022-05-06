@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.adapters
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

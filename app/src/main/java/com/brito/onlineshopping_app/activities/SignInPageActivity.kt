@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,36 +32,13 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         getUserList()
 
         signIn_btn.setOnClickListener {
-
             val username = findViewById<EditText>(R.id.username_login_act).text.toString()
             val password = findViewById<EditText>(R.id.password_login_act).text.toString()
-
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "All text boxes must be filled out", Toast.LENGTH_LONG).show()
-            }
-            else if (checkIfUserExist(password, username, listOfUsers)) {
-                val user  = UserLogin(username, password)
-                viewModel.loginUser(user)
-
-                for (u in listOfUsers){
-                    if(u.username == user.username)
-                        currentUserId = u.id
-                }
-
-                Handler().postDelayed({
-                    val intent = Intent(this, MainActivity::class.java)
-                    finishAffinity()
-                    startActivity(intent)
-                }, 1600)
-            }
-            else {
-                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
-            }
+            login(username, password)
         }
 
         //Exit BTN
-        val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
-        exitBtn.setOnClickListener {
+        exitIcon.setOnClickListener {
             val eBuilder = AlertDialog.Builder(this)
             eBuilder.setTitle("Exit")
             eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
@@ -77,22 +53,19 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
         }
 
         //Home BTN
-        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeIcon.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
-        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartIcon.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
 
         // Change to Sign Up
-        val changeToSignUpBtn = findViewById<TextView>(R.id.change_signUp_textBtn)
-        changeToSignUpBtn.setOnClickListener {
+        change_signUp_textBtn.setOnClickListener {
             val intent = Intent(this, SignUpPageActivity::class.java)
             startActivity(intent)
         }
@@ -116,7 +89,7 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
     }
 
     fun showCategoriesDropDownMenu(v: View){
-        var popup = PopupMenu(this, v)
+        val popup = PopupMenu(this, v)
         popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.popup_category)
         popup.show()
@@ -124,9 +97,33 @@ class SignInPageActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListene
 
     // Options from dropdown menus
     override fun onMenuItemClick(item: MenuItem): Boolean{
-        var intent = MenuDropDowns().onItemClick(item, this)
+        val intent = MenuDropDowns().onItemClick(item, this)
         startActivity(intent)
         return true
+    }
+
+    private fun login(username: String, password: String){
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "All text boxes must be filled out", Toast.LENGTH_LONG).show()
+        }
+        else if (checkIfUserExist(password, username, listOfUsers)) {
+            val user  = UserLogin(username, password)
+            viewModel.loginUser(user)
+
+            for (u in listOfUsers){
+                if(u.username == user.username)
+                    currentUserId = u.id
+            }
+
+            Handler().postDelayed({
+                val intent = Intent(this, MainActivity::class.java)
+                finishAffinity()
+                startActivity(intent)
+            }, 1500)
+        }
+        else {
+            Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getUserList(){

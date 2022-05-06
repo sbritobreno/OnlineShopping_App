@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,8 +27,8 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
 
-        var productId = intent.getIntExtra("ProductId", 0)
-        var path = productId.toString()
+        val productId = intent.getIntExtra("ProductId", 0)
+        val path = productId.toString()
 
         getSingleProduct(path)
 
@@ -49,8 +48,7 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
 
         //Exit BTN
-        val exitBtn = findViewById<ImageButton>(R.id.exitIcon)
-        exitBtn.setOnClickListener {
+        exitIcon.setOnClickListener {
             val eBuilder = AlertDialog.Builder(this)
             eBuilder.setTitle("Exit")
             eBuilder.setIcon(R.drawable.ic_baseline_warning_24)
@@ -65,15 +63,13 @@ class ProductDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
 
         //Home BTN
-        val homeBtn = findViewById<ImageButton>(R.id.homeIcon)
-        homeBtn.setOnClickListener{
+        homeIcon.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         //Cart BTN
-        val cartBtn = findViewById<ImageButton>(R.id.cartIcon)
-        cartBtn.setOnClickListener{
+        cartIcon.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }

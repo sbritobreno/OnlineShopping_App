@@ -1,9 +1,7 @@
 package com.brito.onlineshopping_app.utils
-
 import android.app.Activity
 import android.content.Intent
 import android.view.MenuItem
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.finishAffinity
 import com.brito.onlineshopping_app.R
 import com.brito.onlineshopping_app.activities.*
@@ -13,7 +11,7 @@ open class MenuDropDowns {
      fun onItemClick(item: MenuItem, act: Activity): Intent {
         when (item.itemId) {
             //Categories Menu
-            (R.id.allproducts_menu) -> {
+            (R.id.allProducts_menu) -> {
                 return Intent(act, MainActivity::class.java)
             }
             (R.id.electronics_menu) -> {

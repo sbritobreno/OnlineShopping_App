@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -20,8 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.noUserIcon
 import kotlinx.android.synthetic.main.activity_main.userIcon
 import kotlinx.android.synthetic.main.activity_purchase_history.*
 
-class PurchaseHistoryActivity : AppCompatActivity(), OnHistoryItemClickListener,
-    PopupMenu.OnMenuItemClickListener {
+class PurchaseHistoryActivity : AppCompatActivity(), OnHistoryItemClickListener, PopupMenu.OnMenuItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_history)

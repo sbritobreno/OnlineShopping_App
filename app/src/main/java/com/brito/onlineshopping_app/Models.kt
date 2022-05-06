@@ -68,6 +68,7 @@ data class Geolocation(
     val long: String?
 )
 
+// Carts
 data class Cart(
     val id: Int?,
     val userId: Int?,

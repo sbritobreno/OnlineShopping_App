@@ -43,12 +43,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <TextView
-                    android:id="@+id/total_item_price_cart_rview"
+                    android:id="@+id/total_item_price_cart_rView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -57,7 +57,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/currency_symbol_rview"
+                    android:id="@+id/currency_symbol_rView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -140,9 +140,6 @@
                     tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.adapters
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         itemView.setOnClickListener{
             action.onItemClick(productModel, adapterPosition)
         }
-        itemView.findViewById<Button>(R.id.add_to_cart_btn_rview).setOnClickListener{
+        itemView.findViewById<Button>(R.id.add_to_cart_btn_rView).setOnClickListener{
             action.onAddCartClick(productModel, adapterPosition)
         }
     }

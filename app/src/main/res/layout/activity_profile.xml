@@ -61,9 +61,9 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
             android:layout_margin="20dp"
-            app:shapeAppearance="@style/roundImageView"/>
+            android:adjustViewBounds="true"
+            app:shapeAppearance="@style/roundImageView" />
 
         <LinearLayout
             android:layout_width="wrap_content"

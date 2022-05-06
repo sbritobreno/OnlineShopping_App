@@ -1,5 +1,4 @@
 package com.brito.onlineshopping_app.activities
-
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -37,7 +36,6 @@ import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnMenuItemClickListener {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -123,7 +121,7 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
             product.price = finalPrice
             product.quantity = item.quantity
 
-            purchasedHistory.add(PurchasedCart(currentUserId, formattedDate, arrayListOf(product), finalPrice))
+            purchasedHistory.add(0, PurchasedCart(currentUserId, formattedDate, arrayListOf(product), finalPrice))
             deleteItemFromCart(item.productId!!)
 
             var productName = ""
@@ -220,12 +218,12 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
                 call: Call<ArrayList<Cart>>,
                 response: Response<ArrayList<Cart>>
             ) {
-                if (listFilledUp) {
+                if (listFilledUp.not()) {
                     for (cart in response.body()!!)
                         for (product in cart.products)
                             allProductsInCart.add(product)
                 }
-                listFilledUp = false
+                listFilledUp = true
             }
 
             override fun onFailure(call: Call<ArrayList<Cart>>, t: Throwable) {
