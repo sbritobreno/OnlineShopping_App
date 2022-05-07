@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity(), OnProductItemClickListener, PopupMenu.
         setContentView(R.layout.activity_main)
 
         getListOfProducts()
-        CartActivity().getUserCartList()
+
+        if(currentUserId != 0)
+            CartActivity().getUserCartList(currentUserId!!)
 
         if (currentToken.token!!.isNotEmpty()) {
             noUserIcon.visibility = View.GONE

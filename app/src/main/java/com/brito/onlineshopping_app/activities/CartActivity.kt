@@ -211,8 +211,8 @@ class CartActivity : AppCompatActivity(), OnCartItemClickListener, PopupMenu.OnM
         return true
     }
 
-    fun getUserCartList() {
-        val serviceGenerator = ServiceGenerator.api.getUserCart(currentUserId!!, currentToken.toString())
+    fun getUserCartList(id: Int) {
+        val serviceGenerator = ServiceGenerator.api.getUserCart(id, currentToken.toString())
         serviceGenerator.enqueue(object : Callback<ArrayList<Cart>> {
             override fun onResponse(
                 call: Call<ArrayList<Cart>>,
