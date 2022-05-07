@@ -1,6 +1,8 @@
 # OnlineShopping_App
 Final Project for the first semester of MobileApp
 
+# Student: Breno Silva Brito, ID: 24059
+
 ## 1.Authentication
 - [x] Allow User to Signup
 - [x] Log In using username and password
